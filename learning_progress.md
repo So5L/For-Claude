@@ -30,7 +30,7 @@
 | 학습 시간 | 고정 일정 없음 |
 | 현재 위치 | 1단원 Simulate and Plot in 1D, A01-04 시작 전 |
 | 마지막 실행 | t_end = 2*v0/g → 2.0387 s, n_timesteps = ceil(t_end/dt) → 204 (v0=10 m/s, dt=0.01 s, g=9.81 m/s²) |
-| 다음 행동 | Simulate and Plot in 1D 섹션의 초기 위치가 0이 아닌 비행시간 식 유도 문제 원문 화면을 확인하고 A01-04 진행 |
+| 다음 행동 | Simulate & Plot 버튼으로 1D 코드를 직접 실행한 결과 화면 제출(A01-05). 이어서 A01-04(원문의 ‘독자 연습’ 유도), Try 4문항 |
 
 ## 3. 진행률 계산 규칙
 
@@ -75,7 +75,7 @@
 - [x] A01-01 — **Set Up Variables**: 변수를 설정하고 한 시간 간격 계산을 실행한다. 완료 조건: 변수의 단위, vNext·pNext 값, 속도·위치 그래프를 제출한다.
 - [x] A01-02 — **Numerical Approximation / Try**: 반복 갱신 코드를 여러 번 실행한다. 완료 조건: 시간·속도·위치 표가 갱신된 결과와 변화 방향을 설명한다.
 - [x] A01-03 — **How Many Timesteps? / Try·Reflect**: 필요 시간 간격 수를 계산한다. 완료 조건: n_timesteps 계산과 정수 여부 판단을 기록한다.
-- [ ] A01-04 — **Simulate and Plot in 1D / derivation**: 초기 위치가 0이 아닌 비행시간 식을 유도한다. 완료 조건: 유도 과정과 한 초기조건에서 계산한 비행시간을 기록한다.
+- [ ] A01-04 — **Simulate and Plot in 1D / derivation**: 초기 위치가 0이 아닌 비행시간 식을 유도한다. 원문: ‘Details are left as an exercise to the reader.’ 공식 Try·Exercise 번호가 없는 독자 연습이며 교재가 최종식 t_end=(v0+√(v0²+2g·p0))/g를 제시한다. 완료 조건(튜터 기준): 사용자가 이 식이 나오는 유도 과정을 직접 쓴다. 특정 수치 계산은 추가(선택).
 - [ ] A01-05 — **Simulate and Plot in 1D**: 전체 1차원 시뮬레이션을 실행한다. 완료 조건: 속도·위치 그래프와 초기조건을 기록한다.
 - [ ] A01-06 — **Simulate and Plot in 1D / Try m**: 질량 m을 변경해 다시 실행한다. 완료 조건: 변경 전후 그래프와 자유낙하에서 질량의 역할을 설명한다.
 - [ ] A01-07 — **Simulate and Plot in 1D / Try v0**: 초기 속도를 변경해 다시 실행한다. 완료 조건: 최고 높이와 비행시간의 변화 방향을 기록한다.
@@ -371,7 +371,7 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 
 ## 10. 다음 수업과 업데이트 규칙
 
-1. A01-04: Simulate and Plot in 1D의 초기 위치가 0이 아닌 비행시간 식 유도. 원문 화면을 확인한 뒤 진행한다.
+1. A01-05: Simulate & Plot 버튼으로 1D 코드를 직접 실행한 결과 확인 → A01-04(독자 연습 유도) → Try 4문항(A01-06~A01-08).
 2. 준비 확인 후 `Scripts/ProjectileMotion.mlx`의 Free Fall / Numerical Approximation으로 시작한다.
 3. 최초 계산 실습 위치는 A01-01: Set Up Variables 및 한 시간 간격 계산. 전체 스크립트를 Run All로 실행하도록 안내하지 않는다.
 4. 매 수업은 현재 위치·진행률 → 배울 내용 → 핵심 개념·단위·좌표 → 실습 한 단계 → 결과 확인·이해 확인 순서로 진행한다.
@@ -379,6 +379,8 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 6. 수업 종료 시 실제 완료 ID, 결과/설명 근거, 파일명, 문제·해결, 현재 섹션과 다음 행동을 갱신한다. 완료 수를 다시 계산해 최신 파일을 제공한다.
 7. 새 대화에서 이 파일을 읽고 기록된 위치·분모를 유지한다. 기록에 없는 완료 상태를 추측하지 않는다.
 8. 사용자가 “학습 인계서 작성해 줘”라고 요청하면 교재·환경·완료 ID·현재 위치·두 진행률·실제 파일·이해/보충·미해결 오류·다음 실습·전체 진도표를 이 기록과 대조해 작성한다.
+
+9. 원문 우선 규칙: 교재 문제는 GitHub 저장소 원문(release 61167f7)을 직접 읽어 그대로 진행한다. 튜터가 만든 추가 과제는 ‘추가(선택)’로 표시하고 진행률 분모·분자에 넣지 않는다. 사용자가 원문 캡처를 매번 보낼 필요는 없고, 사용자의 실행 결과·오류만 요청한다.
 
 ## 11. 수업 기록
 
@@ -403,3 +405,5 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 | 2026-10-13 | 사용자가 t_end=2.0387, n_timesteps=203.8736 실행. Reflect 답을 코드 셀에 한글로 입력해 Invalid text character 오류 발생. 오류 원인과 해결 방법(% 주석) 안내 | 추가 완료 없음 | 교재 2/79=2.5%, 제작 0/20=0% | 오류 해결 후 Reflect 확정, A01-03 완료 처리 |
 
 | 2026-10-13 | 오류를 %로 해결하고 n_timesteps = ceil(t_end/dt) → 204 확인. Reflect 직접 답변 확인 | A01-03 | 교재 3/79=3.8%, 제작 0/20=0% | A01-04 원문 화면 확인 대기 |
+
+| 2026-10-13 | 원문을 GitHub 저장소에서 직접 확인(61167f7). 사용자가 A01-04 안내 중 일부(근 선택·v0=50/p0=10 수치 계산)가 원문에 없는 추가 과제임을 지적. 원문은 ‘Details are left as an exercise to the reader.’ 문장과 Try 4문항(m·v0·dt 변경, MATLAB 오류). 사용자 화면의 dt 컨트롤은 0.001 | 추가 완료 없음 | 교재 3/79=3.8%, 제작 0/20=0% | 사용자가 Simulate & Plot을 직접 실행한 결과 대기 |
