@@ -30,7 +30,7 @@
 | 학습 시간 | 고정 일정 없음 |
 | 현재 위치 | 1단원 Implementing a 1D Projectile (Simulink), A01-11 진행 중. A01-04 대기 |
 | 마지막 실행 | 2D Exercise 2 코드 실행(스크린샷): v0=50, 45도에서 x–y 포물선, 사거리 약 255 m, 최고 높이 약 63.7 m |
-| 다음 행동 | Projectile_1D.slx 열기, Constant(−9.81)·적분기 2개·초기조건(v=50, p=10)·Scope 구성 후 화면 제출(A01-11 1단계). 이어서 Hit Crossing·Stop Simulation·Stop time 15·Max step 1e-2 설정, 실행. 그 뒤 A01-12, A01-04 |
+| 다음 행동 | 라벨·Scope 입력 2 연결 수정, Hit Crossing(falling)+Stop Simulation, Stop time 15·Max step 1e-2 설정 후 실행한 모델·Scope 결과 제출(A01-11). 예상: 약 10.4초에 정지, 최고 높이 약 137 m. 그 뒤 A01-12, A01-04 |
 
 ## 3. 진행률 계산 규칙
 
@@ -375,7 +375,7 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 - A01-08 완료 근거(Try 4): 사용자가 p0=−5 정상, −5.5 이하 오류를 찾고 오류 화면을 첨부했다(v0=9, p0=−5, dt=0.001: ‘Error using : Colon operands must be real scalars.’). 검산: 루트 안 값 81−98.1<0이라 tEnd가 복소수가 되어 colon 오류. 이유(땅 아래에서 출발해 땅 높이에 올라오지 못함)는 튜터가 설명했고 사용자의 재진술은 받지 않았다(사용자 요청으로 추가 질문 생략).
 - A01-09 완료 근거: 사용자 보고 vx0=35.355, vy0=35.355(v0=50, angle=45). 검산 50·cos45°=35.3553로 일치. 사용자 코드는 보지 못했다. 사용자가 ‘왜 v0를 곱하는지, vx0·vy0가 무엇인지’ 질문 → 설명: cos·sin은 단위 없는 비율, v0를 곱해 m/s 성분이 되며, 속도는 크기와 방향을 가진 양이고 피타고라스로 50이 복원된다. 사용자 요청으로 추가 질문은 생략했다.
 - A01-10 완료 근거: 첨부 화면의 코드(tEnd=(vy0+sqrt(vy0^2+2*g*y0))/g, vx(i)=vx(i-1), vy(i)=vy(i-1)-g*dt, x(i)=x(i-1)+vx(i)*dt, y(i)=y(i-1)+vy(i)*dt)와 x–y 궤적 확인. v0=50, 45도: 사거리 약 255 m(검산 v0²·sin2θ/g=254.8 m), 최고 높이 약 63.7 m(검산 vy0²/(2g)=63.7 m)로 일치.
-- A01-11 진행 중: 모델 내부 지침 확인 — Constant −9.81(‘-g’), 적분기 2개 직렬(초기조건 v(0)=50, p(0)=10), Scope(Open at simulation start, 표시 [2,1]에 위치·속도 연결), Hit Crossing(falling) + Stop Simulation(위치 신호 분기), Stop time 15·Max step size 1e-2. 사용자 구성 대기.
+- A01-11 진행 중: 모델 내부 지침 확인 — Constant −9.81(‘-g’), 적분기 2개 직렬(초기조건 v(0)=50, p(0)=10), Scope(Open at simulation start, 표시 [2,1]에 위치·속도 연결), Hit Crossing(falling) + Stop Simulation(위치 신호 분기), Stop time 15·Max step size 1e-2. 1단계 확인(스크린샷): Constant −9.81(라벨 -g), 적분기 2개 직렬, Scope 2행 표시 확인. 신호 라벨이 한 칸씩 어긋남(−g→적분기1 선이 ‘v’, 적분기1→적분기2 선이 ‘p’, 마지막 선은 라벨 없음), Scope 입력 2에 속도 미연결, 초기조건은 화면에서 확인 불가(실행 결과로 확인 예정). 종료 조건·시간 설정·실행 대기.
 - 보충 후보: 시간 간격, 속도·가속도, 수치 적분, 좌표계·회전행렬, 힘·토크, 관성, 피드백, 제어기 각 항. 이해 상태를 추정해 완료 처리하지 않는다.
 
 ## 10. 다음 수업과 업데이트 규칙
@@ -432,3 +432,5 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 | 2026-10-14 | Exercise 1 결과 보고(vx0=vy0=35.355, v0=50, angle=45)와 ‘왜 v0를 곱하는가, vx0·vy0는 무엇인가’ 질문. 설명 후 Exercise 2 골격 안내 | A01-09 | 교재 8/79=10.1%, 제작 0/20=0% | Exercise 2 코드·궤적 그래프 대기 |
 
 | 2026-10-14 | 튜터 골격의 `...`(MATLAB 줄 이음 기호)와 `==` 때문에 난 오류를 정리하고, 사용자가 4개 빈칸을 직접 채워 실행. 궤적 그래프 확인(사거리 약 255 m, 최고 약 63.7 m). 사용자 코드·그래프 확인 | A01-10 | 교재 9/79=11.4%, 제작 0/20=0% | Projectile_1D.slx 구성 1단계(적분기·Scope) 결과 대기 |
+
+| 2026-10-14 | Projectile_1D 1단계 모델 화면 확인. 신호 라벨 위치 어긋남과 Scope 입력 2 미연결을 지적. Hit Crossing·Stop Simulation·시간 설정·실행 안내 | 추가 완료 없음(A01-11 진행 중) | 교재 9/79=11.4%, 제작 0/20=0% | 완성 모델과 Scope 실행 결과 대기 |
