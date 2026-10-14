@@ -3,7 +3,7 @@
 기준일: 2026-10-14 (한국 시간)  
 진도표 버전: 1.0  
 학습 언어: 한국어  
-상태: A01-01~A01-03·A01-05~A01-10 완료, A01-11(Projectile_1D.slx) 진행 중, A01-04(독자 연습 유도) 대기
+상태: A01-01~A01-03·A01-05~A01-11 완료, A01-12(항력 모델) 진행 중, A01-04(독자 연습 유도) 대기
 
 ## 1. 교재와 확인 범위
 
@@ -28,9 +28,9 @@
 | MATLAB 숙련도 | 기초 수준 |
 | 수학·제어 | 배운 경험 있음, 필요 개념은 기초부터 보충 |
 | 학습 시간 | 고정 일정 없음 |
-| 현재 위치 | 1단원 Implementing a 1D Projectile (Simulink), A01-11 진행 중. A01-04 대기 |
-| 마지막 실행 | 2D Exercise 2 코드 실행(스크린샷): v0=50, 45도에서 x–y 포물선, 사거리 약 255 m, 최고 높이 약 63.7 m |
-| 다음 행동 | 라벨·Scope 입력 2 연결 수정, Hit Crossing(falling)+Stop Simulation, Stop time 15·Max step 1e-2 설정 후 실행한 모델·Scope 결과 제출(A01-11). 예상: 약 10.4초에 정지, 최고 높이 약 137 m. 그 뒤 A01-12, A01-04 |
+| 현재 위치 | 1단원 Adding Drag to a 1D Projectile, A01-12 진행 중. A01-04 대기 |
+| 마지막 실행 | Projectile_1D 실행(스크린샷): Scope 정지 시각 T=10.3899 s, 최고 높이 약 137 m, 시작 p=10·v=50 확인. Scope 시간축이 밀려(Offset=−6.007) 그래프가 6초부터 보임 |
+| 다음 행동 | Projectile_1D_WithDrag.slx: 1D 모델 복사, 항력 −sign(v)·α·v²(α=0.1) 하위 구성(Gain·Sign·Square·Product·Sum) 후 연결·실행(A01-12). Reflect 3문항 답변. 그 뒤 A01-04 |
 
 ## 3. 진행률 계산 규칙
 
@@ -57,20 +57,20 @@
 | 지표 | 완료/전체 | 진행률 |
 |---|---:|---:|
 | 공식 교재 본 단원 | 0/11 | 0% |
-| 공식 교재 기반 체크포인트 | 9/79 | 11.4% |
-| 핵심 체크포인트 | 9/53 | 17.0% |
+| 공식 교재 기반 체크포인트 | 10/79 | 12.7% |
+| 핵심 체크포인트 | 10/53 | 18.9% |
 | 개인 시뮬레이터 작업 | 0/20 | 0% |
 | 선택 3차원 시각화 | 0/1 | 미시작 |
 
 ## 4. 전체 단원과 학습 체크포인트
 
-각 항목 형식: ID — 원문 실습 위치 — 할 일 — 완료 조건. A01-01~A01-03·A01-05~A01-10 완료, A01-11 진행 중, 나머지는 미시작이다.
+각 항목 형식: ID — 원문 실습 위치 — 할 일 — 완료 조건. A01-01~A01-03·A01-05~A01-11 완료, A01-12 진행 중, 나머지는 미시작이다.
 
 ### 1. Projectile Motion — 핵심
 
 파일: `Scripts/ProjectileMotion.mlx`  
 세부 목차: Free Fall → Numerical Approximation → Set Up Variables → How Many Timesteps? → Simulate and Plot in 1D → 2D Projectile Motion → Modeling Projectiles in Simulink → Implementing a 1D Projectile → Adding Drag to a 1D Projectile  
-진도: 9/12
+진도: 10/12
 
 - [x] A01-01 — **Set Up Variables**: 변수를 설정하고 한 시간 간격 계산을 실행한다. 완료 조건: 변수의 단위, vNext·pNext 값, 속도·위치 그래프를 제출한다.
 - [x] A01-02 — **Numerical Approximation / Try**: 반복 갱신 코드를 여러 번 실행한다. 완료 조건: 시간·속도·위치 표가 갱신된 결과와 변화 방향을 설명한다.
@@ -82,7 +82,7 @@
 - [x] A01-08 — **Simulate and Plot in 1D / Try dt·error**: 시간 간격을 바꾸고 코드의 오류 발생 조건을 조사한다. 완료 조건: 두 간격의 결과와 오류가 발생하거나 발생하지 않는 이유를 기록한다.
 - [x] A01-09 — **2D Projectile Motion / Exercise 1**: sind·cosd로 초기 속도의 두 성분을 계산한다. 완료 조건: vx0·vy0 계산 코드와 값, 각도의 단위를 기록한다.
 - [x] A01-10 — **2D Projectile Motion / Exercise 2**: 1차원 코드를 2차원 운동 코드로 확장한다. 완료 조건: 수평·수직 위치를 추적하는 코드와 궤적 그래프를 제출한다.
-- [ ] A01-11 — **Implementing a 1D Projectile / model annotation**: Projectile_1D.slx에 운동 모델과 종료 조건을 직접 구성한다. 완료 조건: 초기 위치 10 m, 초기 속도 50 m/s에서 실행한 모델·Scope·종료 결과를 제출한다.
+- [x] A01-11 — **Implementing a 1D Projectile / model annotation**: Projectile_1D.slx에 운동 모델과 종료 조건을 직접 구성한다. 완료 조건: 초기 위치 10 m, 초기 속도 50 m/s에서 실행한 모델·Scope·종료 결과를 제출한다.
 - [ ] A01-12 — **Adding Drag to a 1D Projectile / Reflect**: Projectile_1D_WithDrag.slx에 항력 모델을 구성한다. 완료 조건: 항력 포함·미포함 및 항력 계수 변경 결과와 지면 도달 시점을 비교한다.
 
 ### 2. Rigid Transforms — 핵심
@@ -375,7 +375,7 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 - A01-08 완료 근거(Try 4): 사용자가 p0=−5 정상, −5.5 이하 오류를 찾고 오류 화면을 첨부했다(v0=9, p0=−5, dt=0.001: ‘Error using : Colon operands must be real scalars.’). 검산: 루트 안 값 81−98.1<0이라 tEnd가 복소수가 되어 colon 오류. 이유(땅 아래에서 출발해 땅 높이에 올라오지 못함)는 튜터가 설명했고 사용자의 재진술은 받지 않았다(사용자 요청으로 추가 질문 생략).
 - A01-09 완료 근거: 사용자 보고 vx0=35.355, vy0=35.355(v0=50, angle=45). 검산 50·cos45°=35.3553로 일치. 사용자 코드는 보지 못했다. 사용자가 ‘왜 v0를 곱하는지, vx0·vy0가 무엇인지’ 질문 → 설명: cos·sin은 단위 없는 비율, v0를 곱해 m/s 성분이 되며, 속도는 크기와 방향을 가진 양이고 피타고라스로 50이 복원된다. 사용자 요청으로 추가 질문은 생략했다.
 - A01-10 완료 근거: 첨부 화면의 코드(tEnd=(vy0+sqrt(vy0^2+2*g*y0))/g, vx(i)=vx(i-1), vy(i)=vy(i-1)-g*dt, x(i)=x(i-1)+vx(i)*dt, y(i)=y(i-1)+vy(i)*dt)와 x–y 궤적 확인. v0=50, 45도: 사거리 약 255 m(검산 v0²·sin2θ/g=254.8 m), 최고 높이 약 63.7 m(검산 vy0²/(2g)=63.7 m)로 일치.
-- A01-11 진행 중: 모델 내부 지침 확인 — Constant −9.81(‘-g’), 적분기 2개 직렬(초기조건 v(0)=50, p(0)=10), Scope(Open at simulation start, 표시 [2,1]에 위치·속도 연결), Hit Crossing(falling) + Stop Simulation(위치 신호 분기), Stop time 15·Max step size 1e-2. 1단계 확인(스크린샷): Constant −9.81(라벨 -g), 적분기 2개 직렬, Scope 2행 표시 확인. 신호 라벨이 한 칸씩 어긋남(−g→적분기1 선이 ‘v’, 적분기1→적분기2 선이 ‘p’, 마지막 선은 라벨 없음), Scope 입력 2에 속도 미연결, 초기조건은 화면에서 확인 불가(실행 결과로 확인 예정). 2단계 확인(스크린샷): 라벨 수정 완료(a, v, p), 속도를 Scope 입력 2에 분기 연결 완료. Hit Crossing 블록은 추가했으나 입력이 위치 p가 아니라 속도 v에 연결되어 있고 Stop Simulation 블록은 아직 없다. 시간 설정·실행 대기.
+- A01-11 완료 근거: 첨부 화면 — 모델 구성(Constant −9.81, 적분기 2개, 라벨 a·v·p, Scope 2입력, 위치 p→Hit Crossing(falling)→Stop Simulation)과 Scope 결과: 정지 T=10.3899 s, 최고 높이 약 137 m, 시작 p(0)=10·v(0)=50 확인. 검산 t_end=(50+√(50²+2·9.81·10))/9.81=10.3899 s로 일치. Stop time 15·Max step 1e-2 설정값은 화면에서 직접 확인하지 못했다(축은 0~15).
 - 보충 후보: 시간 간격, 속도·가속도, 수치 적분, 좌표계·회전행렬, 힘·토크, 관성, 피드백, 제어기 각 항. 이해 상태를 추정해 완료 처리하지 않는다.
 
 ## 10. 다음 수업과 업데이트 규칙
@@ -436,3 +436,5 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 | 2026-10-14 | Projectile_1D 1단계 모델 화면 확인. 신호 라벨 위치 어긋남과 Scope 입력 2 미연결을 지적. Hit Crossing·Stop Simulation·시간 설정·실행 안내 | 추가 완료 없음(A01-11 진행 중) | 교재 9/79=11.4%, 제작 0/20=0% | 완성 모델과 Scope 실행 결과 대기 |
 
 | 2026-10-14 | 사용자가 모델 화면과 교재 ‘Adding Drag’ 화면을 함께 첨부하고 ‘교재대로 가르치는 게 맞는가’ 질문. 답변: 순서와 Try·Exercise·Reflect 문항은 교재, 체크포인트 ID·진행률·보충 설명·Exercise 2 골격·Simulink 단계 분할은 튜터 추가임을 구분해 안내. 모델의 Hit Crossing이 v에 연결된 점과 Stop Simulation 누락 지적 | 추가 완료 없음(A01-11 진행 중) | 교재 9/79=11.4%, 제작 0/20=0% | Hit Crossing를 p에 연결, Stop Simulation 추가, 시간 설정, 실행 결과 대기 |
+
+| 2026-10-14 | 모델 수정과 실행 결과 확인(정지 T=10.3899 s, 최고 약 137 m, p(0)=10·v(0)=50). 검산 일치. 교재 항력 단원 모델 내부 지침(1D 모델 복사 → 항력 하위 구성 → 연결) 확인 후 안내 | A01-11 | 교재 10/79=12.7%, 제작 0/20=0% | 항력 모델 구성 화면·Scope 결과 대기 |
