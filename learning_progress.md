@@ -3,7 +3,7 @@
 기준일: 2026-10-15 (한국 시간)  
 진도표 버전: 1.0  
 학습 언어: 한국어  
-상태: 1단원 완료(12/12), 2단원 Rigid Transforms A02-01~A02-07 완료, A02-08 진행 중
+상태: 1·2단원 완료(12/12, 8/8), 3단원 Propeller Model A03-01 시작 전
 
 ## 1. 교재와 확인 범위
 
@@ -28,9 +28,9 @@
 | MATLAB 숙련도 | 기초 수준 |
 | 수학·제어 | 배운 경험 있음, 필요 개념은 기초부터 보충 |
 | 학습 시간 | 고정 일정 없음 |
-| 현재 위치 | 2단원 Rigid Transforms / Rotations, Orientation, and Quaternions(QuaternionExample), A02-08 진행 중 |
-| 마지막 실행 | 6DOF 플랫폼 예제 실행(스크린샷): 6DOF (Euler Angles) 블록 입력 F_xyz(N)·M_xyz(N·m), 출력 V_e·X_e·φθψ·DCM·V_b·ω_b·dω_b/dt·A_bb 확인, Scope 5개 그래프 표시 |
-| 다음 행동 | openExample("shared_positioning/QuaternionExample") 실행, 예제의 회전 표현 결과와 사용 단위 기록(A02-08). 필요 제품이 없으면 보류로 기록 |
+| 현재 위치 | 3단원 Propeller Model / Thrust model Exercise 1, A03-01 시작 전 |
+| 마지막 실행 | QuaternionExample 실행 확인(사용자 보고): 오일러각을 도로 적고 deg2rad로 변환, quaternion(...,'euler','ZYX','frame')으로 사원수 생성 |
+| 다음 행동 | PropellerModel.mlx Exercise 1: M=0.54 kg, kT=1.072e-5, g=9.81에서 호버링 omega_hover(rad/s)를 직접 계산하고 CheckEx1 결과 제출(A03-01) |
 
 ## 3. 진행률 계산 규칙
 
@@ -56,15 +56,15 @@
 
 | 지표 | 완료/전체 | 진행률 |
 |---|---:|---:|
-| 공식 교재 본 단원 | 1/11 | 9.1% |
-| 공식 교재 기반 체크포인트 | 19/79 | 24.1% |
-| 핵심 체크포인트 | 19/53 | 35.8% |
+| 공식 교재 본 단원 | 2/11 | 18.2% |
+| 공식 교재 기반 체크포인트 | 20/79 | 25.3% |
+| 핵심 체크포인트 | 20/53 | 37.7% |
 | 개인 시뮬레이터 작업 | 0/20 | 0% |
 | 선택 3차원 시각화 | 0/1 | 미시작 |
 
 ## 4. 전체 단원과 학습 체크포인트
 
-각 항목 형식: ID — 원문 실습 위치 — 할 일 — 완료 조건. 1단원 전체 완료, A02-01~A02-07 완료, A02-08 진행 중, 나머지는 미시작이다.
+각 항목 형식: ID — 원문 실습 위치 — 할 일 — 완료 조건. 1단원 전체 완료, 1·2단원 전체 완료, 나머지는 미시작이다.
 
 ### 1. Projectile Motion — 핵심
 
@@ -89,7 +89,7 @@
 
 파일: `Scripts/RigidTransforms.mlx`  
 세부 목차: 점군 불러오기 → 회전·병진 객체 → 순차 변환 → 전체 변환 → Try → 애니메이션 Exercise → 6자유도 플랫폼 예제 → Rotations, Orientation, and Quaternions → Further Explorations  
-진도: 7/8
+진도: 8/8
 
 - [x] A02-01 — **initial point cloud**: 찻주전자 점군을 불러와 표시한다. 완료 조건: 원본 점군과 좌표축을 확인한다.
 - [x] A02-02 — **incremental transforms**: tform1·tform2·tform3을 순차 적용한다. 완료 조건: 각 단계의 위치·방향 결과를 기록한다.
@@ -98,7 +98,7 @@
 - [x] A02-05 — **Try / sliders**: 각도·병진 값을 변경한다. 완료 조건: 변경 값을 기록하고 예상 위치와 실제 그림을 비교한다.
 - [x] A02-06 — **Exercise / animation**: for 반복문으로 부드러운 변환 애니메이션을 작성한다. 완료 조건: 완성 코드·시작/끝 상태·실행 결과와 운동 결합에 대한 답변을 제출한다.
 - [x] A02-07 — **6DOF platform / openExample**: 공식 6자유도 플랫폼 예제를 열고 실행한다. 완료 조건: 힘·모멘트 입력과 운동 출력 블록을 찾아 기록한다.
-- [ ] A02-08 — **Rotations, Orientation, and Quaternions**: 연결된 QuaternionExample을 실행한다. 완료 조건: 예제의 회전 표현 결과와 사용 단위를 기록한다.
+- [x] A02-08 — **Rotations, Orientation, and Quaternions**: 연결된 QuaternionExample을 실행한다. 완료 조건: 예제의 회전 표현 결과와 사용 단위를 기록한다.
 
 ### 3. Propeller Model — 핵심
 
@@ -385,6 +385,7 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 - A02-05 완료 근거: 사용자가 x_rot=180°로 찻주전자를 뒤집어 전체 변환 그림에서 위아래가 거꾸로 보임을 확인했다. 순차 변환(tform1·2·3)으로는 프레임 밖으로 나갔으나 전체 변환(ptCloudOut)에서는 나가지 않는다고 보고했다. 설명: 전체 변환은 회전 후 이동이라 최종 중심이 이동값 [x y z] 그대로이므로 값이 ±5 안이면 프레임 안에 있고, 순차 변환은 이동이 이후 원점 기준 회전에 같이 돌아 위치가 달라진다. 프레임 밖은 이동값 절댓값이 약 6 이상이면 가능하다. 참고: 교재 하단 helper rotationMatrix는 Rx*Ry*Rz(z→y→x 순)이며 본문의 R=Rz·Ry·Rx 표기와 다르다(교재 내부 불일치, 코드 기준).
 - A02-06 완료 근거: 사용자가 경로(linspace 6개)와 for 안의 idx번째 rigidtform3d·pctransform으로 애니메이션을 완성했다(최종 코드 화면 확인). 마지막 값(회전 180·90·90, 이동 3·−3·3)에서 disp(mean) 결과 c=(0.0372, 0, 1.7251), 마지막 중심 (4.7251, −3.0372, 3.0). 튜터 검산: Rz90→Ry90→Rx180 순 적용 R·c=(1.7251, −0.0372, 0), +t=(4.7251, −3.0372, 3.0)로 일치(점군 중심이 원점에서 z 방향으로 1.7251 떨어져 있음). Reflect 답변: 매 시간 단계마다 투사체 운동 방정식으로 위치(Translation), 회전 운동 방정식으로 회전각을 계산해 rigidtform3d에 함께 전달해 위치와 방향 변환을 동시에 적용한다.
 - A02-07 완료 근거: 첨부 화면 — 6DOF (Euler Angles) 블록의 입력은 F_xyz(N)(Fx·Fy·Fz 슬라이더)와 M_xyz(N·m)(롤·피치·요 모멘트와 Mxx·Myy·Mzz 슬라이더), 출력은 V_e(m/s)·X_e(m)·φθψ(rad)·DCM_be·V_b(m/s)·ω_b(rad/s)·dω_b/dt·A_bb(m/s²). Inertial·Body Scope에 속도·위치·오일러각·몸체 회전율이 표시됨. Return Here 실행했다고 보고.
+- A02-08 완료 근거: 사용자가 QuaternionExample을 실행해 모두 확인했다고 보고하고 코드 eul3=[0 89 0], eul4=[180 89 180], qdist3 = quaternion(deg2rad(eul3),'euler','ZYX','frame')을 제시했다(출력 화면은 보지 못함). 단위: 각도를 도로 적고 deg2rad로 라디안 변환, 회전 순서 ZYX, frame 회전. 튜터 검산: 두 오일러각은 (180°,0°,180°) 차이로 크게 달라 보이지만 피치 89° 부근이라 실제 회전 차이는 약 2°이다.
 - 보충 후보: 시간 간격, 속도·가속도, 수치 적분, 좌표계·회전행렬, 힘·토크, 관성, 피드백, 제어기 각 항. 이해 상태를 추정해 완료 처리하지 않는다.
 
 ## 10. 다음 수업과 업데이트 규칙
@@ -471,3 +472,5 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 | 2026-10-15 | A02-06: 사용자가 disp로 원래 중심 c=(0.0372, 0, 1.7251)과 마지막 중심 (4.7251, −3.0372, 3.0)을 확인(값: 회전 180·90·90, 이동 3·−3·3). 튜터 검산 R·c+t와 정확히 일치. Reflect 답변(매 단계 투사체 방정식으로 위치, 회전 방정식으로 각도를 계산해 rigidtform3d에 함께 전달) 확인. A02-07 안내 | A02-06 | 교재 18/79=22.8%, 제작 0/20=0% | 6자유도 플랫폼 예제 결과 대기 |
 
 | 2026-10-15 | A02-07: 6DOF 플랫폼 예제를 열고 실행한 화면 확인(6DOF Euler Angles 블록, 입력 F_xyz·M_xyz, 출력 속도·위치·오일러각·몸체 속도·회전율, Scope 결과). Return Here 실행 확인. 힘·모멘트→가속도→속도→위치(각도)의 이중 적분 관계 설명. A02-08 안내 | A02-07 | 교재 19/79=24.1%, 제작 0/20=0% | QuaternionExample 실행 결과 대기 |
+
+| 2026-10-15 | A02-08: 예제 실행·확인 보고와 코드(eul3=[0 89 0], eul4=[180 89 180], quaternion(deg2rad(...),'euler','ZYX','frame')) 제시. 각도 단위(도→deg2rad 라디안), 순서 ZYX, frame 확인. 두 오일러각의 실제 회전 차이가 약 2°임을 튜터가 검산. 2단원 완료. 3단원 교재 원문 확인 후 안내 | A02-08 | 교재 20/79=25.3%, 제작 0/20=0% | A03-01 omega_hover 계산 결과 대기 |
