@@ -3,7 +3,7 @@
 기준일: 2026-10-16 (한국 시간)  
 진도표 버전: 1.0  
 학습 언어: 한국어  
-상태: 1·2·3단원 완료(12/12, 8/8, 5/5), 4단원 Quadcopter Basics A04-01 시작 전
+상태: 1·2·3단원 완료(12/12, 8/8, 5/5), 4단원 Quadcopter Basics A04-01 완료(1/9), A04-02 시작 전
 
 ## 1. 교재와 확인 범위
 
@@ -28,9 +28,9 @@
 | MATLAB 숙련도 | 기초 수준 |
 | 수학·제어 | 배운 경험 있음, 필요 개념은 기초부터 보충 |
 | 학습 시간 | 고정 일정 없음 |
-| 현재 위치 | 4단원 Quadcopter Basics / Simple Geometric Model, A04-01 시작 전 |
-| 마지막 실행 | SimplePropellerModel.slx 실행(스크린샷): ω=900, kT=1.8e-5, km=2.0e-7, ε=1에서 Display T=14.58, Q=0.162 |
-| 다음 행동 | QuadcopterBasics.mlx 앞부분: Mquad=4m+Mbody 코드 실행(m=0.07, Mbody=1.02), +형 프로펠러 번호·좌표·회전 방향(1·3 반시계, 2·4 시계) 정리(A04-01) |
+| 현재 위치 | 4단원 Quadcopter Basics / Simple Inertia Model (+형), A04-02 시작 전 |
+| 마지막 실행 | 사용자 답: Mquad=1.3 kg, +형 프로펠러 좌표 1(0.13,0,0) 2(0,0.13,0) 3(−0.13,0,0) 4(0,−0.13,0) (R=0.13 m) |
+| 다음 행동 | QuadcopterBasics.mlx 'Mass + inertia for "+" quad' 셀 실행(m=0.07, Mbody=1.02, L=0.17, H=0.06, Rval=0.13, r=0.12) 후 Ixx·Iyy·Izz와 단위 기록(A04-02) |
 
 ## 3. 진행률 계산 규칙
 
@@ -57,8 +57,8 @@
 | 지표 | 완료/전체 | 진행률 |
 |---|---:|---:|
 | 공식 교재 본 단원 | 3/11 | 27.3% |
-| 공식 교재 기반 체크포인트 | 25/79 | 31.6% |
-| 핵심 체크포인트 | 25/53 | 47.2% |
+| 공식 교재 기반 체크포인트 | 26/79 | 32.9% |
+| 핵심 체크포인트 | 26/53 | 49.1% |
 | 개인 시뮬레이터 작업 | 0/20 | 0% |
 | 선택 3차원 시각화 | 0/1 | 미시작 |
 
@@ -116,9 +116,9 @@
 
 파일: `Scripts/QuadcopterBasics.mlx`  
 세부 목차: Quadcopter Coordinate System → Propeller Configuration → Motivating example → Simple Geometric Model → Simple Inertia Model → Inertia of Propellers → Inertia of Body → Thrust and yaw-drag model → Derive the Mixer → Estimate Constants → Performance Curves → Forces and Torques → Save the Parameter Values → Next Steps  
-진도: 0/9
+진도: 1/9
 
-- [ ] A04-01 — **Simple Geometric Model**: 기체·프로펠러 질량과 위치를 계산한다. 완료 조건: 총질량과 프로펠러 번호·좌표·회전 방향을 기록한다.
+- [x] A04-01 — **Simple Geometric Model**: 기체·프로펠러 질량과 위치를 계산한다. 완료 조건: 총질량과 프로펠러 번호·좌표·회전 방향을 기록한다.
 - [ ] A04-02 — **Simple Inertia Model / plus**: +형의 관성행렬 계산을 실행한다. 완료 조건: Ixx·Iyy·Izz와 단위를 기록한다.
 - [ ] A04-03 — **Simple Inertia Model / x·Reflect**: x형으로 바꾸어 관성 계산을 비교한다. 완료 조건: 형상·좌표 변경과 관성 결과의 관계를 설명한다.
 - [ ] A04-04 — **Derive the Mixer**: 힘·모멘트 변환 행렬 A를 계산한다. 완료 조건: 입력이 회전속도의 제곱이라는 점과 각 행의 단위를 설명한다.
@@ -390,6 +390,7 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 - A03-02·A03-03 완료 근거: 첨부 화면 — CheckEx2("increases","a") ‘Correct.’, CheckEx2("decreases","b") ‘Correct.’ 및 ‘This dependence on radial distance is why forward-flight propellers must be twisted.’ 사용자 설명: x가 허브에 가까울수록 분모 ωx가 작아져 tan(φ)가 커지고(φ 증가), 끝 쪽은 반대(φ 감소). 보충: 허브에서는 축 방향 유입이 지배해 φ가 90°에 가깝고 끝에서는 회전 속도가 지배해 φ가 0°에 가까워, 전진 비행 프로펠러는 반지름에 따라 피치각을 비틀어야 한다.
 - A03-04 완료 근거: 사용자 Reflect 답 — 추력/토크 비율이 거의 100배이고 그래프 차이는 k_T와 k_m 값의 차이 때문(정확히 1.8e-5/2.0e-7=90배). 보충: T=k_T·ω², Q=ε·k_m·ω²로 ω에 대한 제곱 의존성은 같아 ω가 2배면 둘 다 4배, 비율 T/Q=90은 ω와 무관. 단위가 N과 N·m로 달라 절대 크기보다 비율로 비교한다. 수치(튜터 계산): ω=900에서 T=14.58 N, Q=0.162 N·m. 사용자의 그래프 화면은 보지 못했다.
 - A03-05 완료 근거: 첨부 모델 화면 — Constant(omega=900, Km=2e-7, eps=1, kT=1.8e-5), ω에서 분기해 u²(제곱) 블록 2개, 토크용 Product(ω², Km, eps) 3입력, 추력용 Product(ω², kT) 2입력, Display Q=0.162, T=14.58. 튜터 계산 T=1.8e-5×900²=14.58 N, Q=2e-7×900²=0.162 N·m와 일치. 사용자가 MATLAB 함수 SimplePropellerModel 결과와 직접 비교했는지는 확인하지 못했다.
+- A04-01 완료 근거: 사용자 답 — Mquad=1.3 kg(=4×0.07+1.02 일치), +형 프로펠러 1(0.13,0,0) 2(0,0.13,0) 3(−0.13,0,0) 4(0,−0.13,0). 좌표의 R=0.13 m는 교재 관성 셀의 Rval 값이며, 이 좌표 계산 과제는 튜터가 덧붙인 것(교재 기하 셀은 질량 코드만 있음). 회전 방향 1·3 반시계, 2·4 시계는 교재 설명.
 - 보충 후보: 시간 간격, 속도·가속도, 수치 적분, 좌표계·회전행렬, 힘·토크, 관성, 피드백, 제어기 각 항. 이해 상태를 추정해 완료 처리하지 않는다.
 
 ## 10. 다음 수업과 업데이트 규칙
@@ -486,3 +487,5 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 | 2026-10-16 | A03-04 Reflect: 사용자가 ‘비율이 거의 100배(실제 90배)이고 그래프 차이는 k_T와 k_m 값의 차이 때문’이라고 답함. 맞음. 두 식 모두 ω²이라 비율 T/Q=90은 ω와 무관하고 단위가 달라 절대 비교가 아닌 비율로 봐야 함을 보충(ω=900에서 T=14.58 N, Q=0.162 N·m). A03-05 Exercise 3 안내 | A03-04 | 교재 24/79=30.4%, 제작 0/20=0% | A03-05 Simulink 모델 대기 |
 
 | 2026-10-16 | A03-05: 사용자가 SimplePropellerModel 모델 화면 제출(ω=900, kT=1.8e-5, km=2.0e-7, ε=1, 제곱 블록·Product 2개·Display 2개). Display T=14.58 N, Q=0.162 N·m가 튜터 계산과 일치. 3단원 완료. 4단원 교재 원문 확인 후 A04-01 안내 | A03-05 | 교재 25/79=31.6%, 제작 0/20=0% | A04-01 Mquad와 프로펠러 위치 결과 대기 |
+
+| 2026-10-16 | A04-01: 사용자가 Mquad=1.3 kg과 +형 프로펠러 좌표(R=0.13 m) 제출, 모두 일치. R=0.13 m는 교재 Rval이나 좌표 과제는 튜터 추가임을 설명 | A04-01 | 교재 26/79=32.9%, 제작 0/20=0% | A04-02 관성 셀 실행 결과 대기 |
