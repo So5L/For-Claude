@@ -3,7 +3,7 @@
 기준일: 2026-10-16 (한국 시간)  
 진도표 버전: 1.0  
 학습 언어: 한국어  
-상태: 1·2·3단원 완료(12/12, 8/8, 5/5), 4단원 Quadcopter Basics A04-01·A04-02 완료(2/9), A04-03 시작 전
+상태: 1·2·3단원 완료(12/12, 8/8, 5/5), 4단원 Quadcopter Basics A04-01~A04-03 완료(3/9), A04-04 시작 전
 
 ## 1. 교재와 확인 범위
 
@@ -28,9 +28,9 @@
 | MATLAB 숙련도 | 기초 수준 |
 | 수학·제어 | 배운 경험 있음, 필요 개념은 기초부터 보충 |
 | 학습 시간 | 고정 일정 없음 |
-| 현재 위치 | 4단원 Quadcopter Basics / Simple Inertia Model x형·Reflect, A04-03 시작 전 |
-| 마지막 실행 | configuration="x"로 변경 후 실행 보고(스크린샷): M=1.3, Ixx=Iyy=0.0061, Izz=0.0117로 + 형과 동일. 튜터 검산상 두 형상의 이 값은 이론적으로 같음(화면에서 x 설정 여부는 확인 불가) |
-| 다음 행동 | Reflect(+/x 전환 시 계산에서 바뀌는 부분)에 사용자가 답하면 A04-03 완료 처리 |
+| 현재 위치 | 4단원 Quadcopter Basics / Thrust and yaw-drag model·Derive the Mixer, A04-04 시작 전 |
+| 마지막 실행 | x형 관성 셀 실행 및 Reflect 답변(pB 좌표와 Ibody 회전이 바뀜) |
+| 다음 행동 | Derive the Mixer 셀 실행 후 행렬 A(4×4) 각 행 기록, Reflect(모든 프로펠러를 같은 방향으로 돌리면) 답변(A04-04) |
 
 ## 3. 진행률 계산 규칙
 
@@ -57,8 +57,8 @@
 | 지표 | 완료/전체 | 진행률 |
 |---|---:|---:|
 | 공식 교재 본 단원 | 3/11 | 27.3% |
-| 공식 교재 기반 체크포인트 | 27/79 | 34.2% |
-| 핵심 체크포인트 | 27/53 | 50.9% |
+| 공식 교재 기반 체크포인트 | 28/79 | 35.4% |
+| 핵심 체크포인트 | 28/53 | 52.8% |
 | 개인 시뮬레이터 작업 | 0/20 | 0% |
 | 선택 3차원 시각화 | 0/1 | 미시작 |
 
@@ -116,11 +116,11 @@
 
 파일: `Scripts/QuadcopterBasics.mlx`  
 세부 목차: Quadcopter Coordinate System → Propeller Configuration → Motivating example → Simple Geometric Model → Simple Inertia Model → Inertia of Propellers → Inertia of Body → Thrust and yaw-drag model → Derive the Mixer → Estimate Constants → Performance Curves → Forces and Torques → Save the Parameter Values → Next Steps  
-진도: 2/9
+진도: 3/9
 
 - [x] A04-01 — **Simple Geometric Model**: 기체·프로펠러 질량과 위치를 계산한다. 완료 조건: 총질량과 프로펠러 번호·좌표·회전 방향을 기록한다.
 - [x] A04-02 — **Simple Inertia Model / plus**: +형의 관성행렬 계산을 실행한다. 완료 조건: Ixx·Iyy·Izz와 단위를 기록한다.
-- [ ] A04-03 — **Simple Inertia Model / x·Reflect**: x형으로 바꾸어 관성 계산을 비교한다. 완료 조건: 형상·좌표 변경과 관성 결과의 관계를 설명한다.
+- [x] A04-03 — **Simple Inertia Model / x·Reflect**: x형으로 바꾸어 관성 계산을 비교한다. 완료 조건: 형상·좌표 변경과 관성 결과의 관계를 설명한다.
 - [ ] A04-04 — **Derive the Mixer**: 힘·모멘트 변환 행렬 A를 계산한다. 완료 조건: 입력이 회전속도의 제곱이라는 점과 각 행의 단위를 설명한다.
 - [ ] A04-05 — **Derive the Mixer / configuration·Reflect**: 두 배치의 mixer를 비교한다. 완료 조건: 계산에 사용한 pB와 선택한 배치가 일치하는지 확인하고 부호 패턴을 기록한다.
 - [ ] A04-06 — **Estimate Constants**: 4000 회/분 호버 설계점으로 kT·km을 계산한다. 완료 조건: W·T_prop·kT·km과 속도 기준 단위를 기록한다.
@@ -392,6 +392,7 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 - A03-05 완료 근거: 첨부 모델 화면 — Constant(omega=900, Km=2e-7, eps=1, kT=1.8e-5), ω에서 분기해 u²(제곱) 블록 2개, 토크용 Product(ω², Km, eps) 3입력, 추력용 Product(ω², kT) 2입력, Display Q=0.162, T=14.58. 튜터 계산 T=1.8e-5×900²=14.58 N, Q=2e-7×900²=0.162 N·m와 일치. 사용자가 MATLAB 함수 SimplePropellerModel 결과와 직접 비교했는지는 확인하지 못했다.
 - A04-01 완료 근거: 사용자 답 — Mquad=1.3 kg(=4×0.07+1.02 일치), +형 프로펠러 1(0.13,0,0) 2(0,0.13,0) 3(−0.13,0,0) 4(0,−0.13,0). 좌표의 R=0.13 m는 교재 관성 셀의 Rval 값이며, 이 좌표 계산 과제는 튜터가 덧붙인 것(교재 기하 셀은 질량 코드만 있음). 회전 방향 1·3 반시계, 2·4 시계는 교재 설명.
 - A04-02 완료 근거: 첨부 화면 — M=1.3000 kg, I=diag(0.0061, 0.0061, 0.0117) kg·m², Ixx=0.0061, Iyy=0.0061, Izz=0.0117. 튜터 검산(교재 코드 수식): 프로펠러 Ixx=4·(¼·m·r²)+2·m·R²=3.374e-3, 몸체 Ixx=(1/12)·Mbody·(L²+H²)=2.7625e-3, 합 6.14e-3 / Izz=프로펠러 6.748e-3+몸체 4.913e-3=1.166e-2로 일치. 사용자의 해석 설명은 아직 없음(결과 제출만 확인).
+- A04-03 완료 근거: x형 실행 결과 화면(Ixx=Iyy=0.0061, Izz=0.0117, + 형과 동일) 및 사용자 Reflect 답 — '바뀌는 것은 pB 좌표와 Ibody 회전'. 튜터 보충: 대칭 때문에 이 모델에서 관성 수치는 두 형상이 같고, 형상은 pB(프로펠러 위치)와 몸체 45° 회전 유무로만 반영됨. 화면에서 configuration="x" 설정 여부는 확인 불가.
 - 보충 후보: 시간 간격, 속도·가속도, 수치 적분, 좌표계·회전행렬, 힘·토크, 관성, 피드백, 제어기 각 항. 이해 상태를 추정해 완료 처리하지 않는다.
 
 ## 10. 다음 수업과 업데이트 규칙
@@ -494,3 +495,5 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 | 2026-10-16 | A04-02: 사용자가 + 형 관성 셀 결과 제출(M=1.3, Ixx=Iyy=0.0061, Izz=0.0117). 검산 일치. 관성 구성(원판·평행축·직육면체·45° 회전) 설명 | A04-02 | 교재 27/79=34.2%, 제작 0/20=0% | A04-03 x형 실행·Reflect 대기 |
 
 | 2026-10-16 | A04-03: 사용자가 x형 실행 결과 제출(+형과 동일 수치). 대칭 때문에 Ixx·Iyy·Izz가 같고 바뀌는 것은 pB 좌표·몸체 45° 회전 유무임을 설명. Reflect 답변은 아직 없어 완료 아님 | 추가 완료 없음 | 교재 27/79=34.2%, 제작 0/20=0% | Reflect 답변 대기 |
+
+| 2026-10-16 | A04-03 Reflect: 사용자가 'pB 좌표와 Ibody 회전이 바뀐다'고 답함, 맞음. 다음으로 추력·요 토크 모델과 믹서 안내 | A04-03 | 교재 28/79=35.4%, 제작 0/20=0% | A04-04 믹서 행렬 결과 대기 |
