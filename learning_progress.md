@@ -3,7 +3,7 @@
 기준일: 2026-10-16 (한국 시간)  
 진도표 버전: 1.0  
 학습 언어: 한국어  
-상태: 1·2·3단원 완료(12/12, 8/8, 5/5), 4단원 Quadcopter Basics A04-01~A04-07 완료(7/9), A04-08 시작 전
+상태: 1·2·3단원 완료(12/12, 8/8, 5/5), 4단원 Quadcopter Basics A04-01~A04-08 완료(8/9), A04-09 시작 전
 
 ## 1. 교재와 확인 범위
 
@@ -28,9 +28,9 @@
 | MATLAB 숙련도 | 기초 수준 |
 | 수학·제어 | 배운 경험 있음, 필요 개념은 기초부터 보충 |
 | 학습 시간 | 고정 일정 없음 |
-| 현재 위치 | 4단원 Quadcopter Basics / Forces and Torques, A04-08 시작 전 |
-| 마지막 실행 | Forces and Torques 셀 실행(스크린샷): quad_m 4×4(×1e-6, x형 패턴), f=[12.7530;0;0;0], f(1)−W=0 |
-| 다음 행동 | Reflect(배치 전환 시 이 계산에서 바뀌는 부분)에 사용자가 답하면 A04-08 완료 처리, 이후 A04-09 파라미터 저장 |
+| 현재 위치 | 4단원 Quadcopter Basics / Save the Parameter Values, A04-09 시작 전 |
+| 마지막 실행 | Forces and Torques Reflect 답변: 배치가 바뀌면 quad_m의 롤·피치 행(0 포함 여부)이 바뀌고, 호버링 f는 그대로(합이 0이라서) |
+| 다음 행동 | Save the Parameter Values 셀 실행(currentProject, Data 폴더에 .mat 저장), 생성 파일 이름·저장 변수 확인(A04-09) |
 
 ## 3. 진행률 계산 규칙
 
@@ -57,8 +57,8 @@
 | 지표 | 완료/전체 | 진행률 |
 |---|---:|---:|
 | 공식 교재 본 단원 | 3/11 | 27.3% |
-| 공식 교재 기반 체크포인트 | 32/79 | 40.5% |
-| 핵심 체크포인트 | 32/53 | 60.4% |
+| 공식 교재 기반 체크포인트 | 33/79 | 41.8% |
+| 핵심 체크포인트 | 33/53 | 62.3% |
 | 개인 시뮬레이터 작업 | 0/20 | 0% |
 | 선택 3차원 시각화 | 0/1 | 미시작 |
 
@@ -116,7 +116,7 @@
 
 파일: `Scripts/QuadcopterBasics.mlx`  
 세부 목차: Quadcopter Coordinate System → Propeller Configuration → Motivating example → Simple Geometric Model → Simple Inertia Model → Inertia of Propellers → Inertia of Body → Thrust and yaw-drag model → Derive the Mixer → Estimate Constants → Performance Curves → Forces and Torques → Save the Parameter Values → Next Steps  
-진도: 7/9
+진도: 8/9
 
 - [x] A04-01 — **Simple Geometric Model**: 기체·프로펠러 질량과 위치를 계산한다. 완료 조건: 총질량과 프로펠러 번호·좌표·회전 방향을 기록한다.
 - [x] A04-02 — **Simple Inertia Model / plus**: +형의 관성행렬 계산을 실행한다. 완료 조건: Ixx·Iyy·Izz와 단위를 기록한다.
@@ -125,7 +125,7 @@
 - [x] A04-05 — **Derive the Mixer / configuration·Reflect**: 두 배치의 mixer를 비교한다. 완료 조건: 계산에 사용한 pB와 선택한 배치가 일치하는지 확인하고 부호 패턴을 기록한다.
 - [x] A04-06 — **Estimate Constants**: 4000 회/분 호버 설계점으로 kT·km을 계산한다. 완료 조건: W·T_prop·kT·km과 속도 기준 단위를 기록한다.
 - [x] A04-07 — **Performance Curves**: 추력·모멘트 성능 곡선을 실행한다. 완료 조건: 그래프와 4000 회/분에서의 값을 기록한다.
-- [ ] A04-08 — **Forces and Torques**: 같은 속도의 네 프로펠러를 mixer에 입력한다. 완료 조건: 총추력−무게와 세 모멘트를 확인하고 회전 방향 관련 Reflect에 답한다.
+- [x] A04-08 — **Forces and Torques**: 같은 속도의 네 프로펠러를 mixer에 입력한다. 완료 조건: 총추력−무게와 세 모멘트를 확인하고 회전 방향 관련 Reflect에 답한다.
 - [ ] A04-09 — **Save the Parameter Values**: 파라미터를 Data 폴더에 저장한다. 완료 조건: 실제 생성된 .mat 이름·배치·질량·관성·mixer를 확인한다.
 
 ### 5. Quadcopter Movement — 핵심
@@ -397,6 +397,7 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 - A04-05 완료 근거: 첨부 화면 2장 — 드롭다운 'x configuration'과 '+ configuration'에서 각각 A 계산. +형: 행1 [kT kT kT kT], 행2 [0 −R·kT 0 R·kT], 행3 [R·kT 0 −R·kT 0], 행4 [km −km km −km]. x형은 행2·3의 0이 없고 모든 성분이 ±σ(=√2·R·kT/2). 행1·행4(총추력·요)는 배치와 무관. 튜터 예측과 일치. 사용자는 '둘다 확인했어'라고 보고했으며 부호 패턴 해석은 튜터가 설명했다(사용자 서술 아님).
 - A04-06 완료 근거: 첨부 화면 — W=12.7530, T_prop=3.1883, N=4000, kT=1.9927e-07, km=1.9927e-09. 튜터 검산 W=(1.02+0.28)·9.81=12.753 N, T_prop=W/4=3.18825 N, kT=3.18825/4000²=1.99266e-7 N/rpm², km=0.01·kT 일치. 튜터 보충: rad/s 환산 kT=kT_rpm·(60/2π)²≈1.817e-5(3단원 값 1.8e-5와 같은 크기). 단위(N/rpm², N·m/rpm²)는 튜터가 설명, 사용자 서술 아님.
 - A04-07 완료 근거: 첨부 화면 — 두 셀(N 스윕·subplot 그래프) 실행, 추력 그래프는 0~약 20 N, 모멘트 그래프는 0~약 0.2 N·m의 포물선형 곡선. 튜터 검산: 10000 rpm에서 T=kT·1e8≈19.93 N, M≈0.199 N·m 일치. 4000 rpm 값(T=3.1883 N, M≈0.0319 N·m)은 사용자가 보고하지 않았고 튜터 계산값이다.
+- A04-08 완료 근거: 첨부 화면 — quad_m 4×4(×1e-6; 행1 0.1993, 행2 [0.0183 −0.0183 −0.0183 0.0183], 행3 [0.0183 0.0183 −0.0183 −0.0183], 행4 [0.0020 −0.0020 0.0020 −0.0020]), f=[12.7530;0;0;0], f(1)−W=0. 사용자 Reflect 답: '배치가 바뀌면 quad_m의 롤·피치 행이 바뀌고(0이 들어감) 호버링 f는 그대로, 호버링 시 합이 0이 되기 때문' — 맞음(+형에서는 롤·피치 행에 0이 들어가고 총추력·요 행과 f는 동일).
 - 보충 후보: 시간 간격, 속도·가속도, 수치 적분, 좌표계·회전행렬, 힘·토크, 관성, 피드백, 제어기 각 항. 이해 상태를 추정해 완료 처리하지 않는다.
 
 ## 10. 다음 수업과 업데이트 규칙
@@ -511,3 +512,5 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 | 2026-10-16 | A04-07: 사용자가 성능 곡선 그래프 제출. 포물선 형태·10000 rpm 값 검산 일치. 4000 rpm 값은 튜터가 제시 | A04-07 | 교재 32/79=40.5%, 제작 0/20=0% | A04-08 힘·토크 결과 대기 |
 
 | 2026-10-16 | A04-08: 사용자가 quad_m·f·f(1)−W 결과 제출(f=[12.753;0;0;0], f(1)−W=0, quad_m은 x형 패턴). 호버 조건 확인. Reflect 답변은 아직 없어 완료 아님 | 추가 완료 없음 | 교재 32/79=40.5%, 제작 0/20=0% | Reflect 답변 대기 |
+
+| 2026-10-16 | A04-08 Reflect: 사용자가 배치 변경 시 롤·피치 행이 바뀌고 호버링 f는 그대로라고 답함, 맞음. 다음으로 파라미터 저장 안내 | A04-08 | 교재 33/79=41.8%, 제작 0/20=0% | A04-09 저장 결과 대기 |
