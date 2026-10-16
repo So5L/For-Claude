@@ -3,7 +3,7 @@
 기준일: 2026-10-16 (한국 시간)  
 진도표 버전: 1.0  
 학습 언어: 한국어  
-상태: 1·2단원 완료(12/12, 8/8), 3단원 Propeller Model A03-01~A03-03 완료, A03-04 진행 중
+상태: 1·2단원 완료(12/12, 8/8), 3단원 Propeller Model A03-01~A03-04 완료, A03-05 진행 중
 
 ## 1. 교재와 확인 범위
 
@@ -28,9 +28,9 @@
 | MATLAB 숙련도 | 기초 수준 |
 | 수학·제어 | 배운 경험 있음, 필요 개념은 기초부터 보충 |
 | 학습 시간 | 고정 일정 없음 |
-| 현재 위치 | 3단원 Propeller Model / Impact on Quadcopter Design(SimplePropellerModel Try·Reflect), A03-04 진행 중 |
-| 마지막 실행 | Exercise 2: CheckEx2("increases","a") Correct, CheckEx2("decreases","b") Correct 확인 |
-| 다음 행동 | A03-04: SimplePropellerModel Try 코드(kT=1.8e-5, km=2.0e-7, ω 0~900) 실행·그래프 제출, Reflect ‘같은 ω 증가에 추력이 토크보다 훨씬 빨리 증가하는 이유’ 답변 |
+| 현재 위치 | 3단원 Propeller Model / Exercise 3(SimplePropellerModel.slx), A03-05 진행 중 |
+| 마지막 실행 | SimplePropellerModel Try 코드(kT=1.8e-5, km=2.0e-7, ω 0~900) 그래프 확인(사용자 보고), Reflect 답변 |
+| 다음 행동 | open("SimplePropellerModel.slx"): Constant(ω, kT, km, ε)·Square/Product·Display로 T=kT·ω², Q=ε·km·ω² 구성, MATLAB 함수 결과와 비교(A03-05) |
 
 ## 3. 진행률 계산 규칙
 
@@ -57,14 +57,14 @@
 | 지표 | 완료/전체 | 진행률 |
 |---|---:|---:|
 | 공식 교재 본 단원 | 2/11 | 18.2% |
-| 공식 교재 기반 체크포인트 | 23/79 | 29.1% |
-| 핵심 체크포인트 | 23/53 | 43.4% |
+| 공식 교재 기반 체크포인트 | 24/79 | 30.4% |
+| 핵심 체크포인트 | 24/53 | 45.3% |
 | 개인 시뮬레이터 작업 | 0/20 | 0% |
 | 선택 3차원 시각화 | 0/1 | 미시작 |
 
 ## 4. 전체 단원과 학습 체크포인트
 
-각 항목 형식: ID — 원문 실습 위치 — 할 일 — 완료 조건. 1단원 전체 완료, 1·2단원 전체 완료, A03-01~A03-03 완료, A03-04 진행 중, 나머지는 미시작이다.
+각 항목 형식: ID — 원문 실습 위치 — 할 일 — 완료 조건. 1단원 전체 완료, 1·2단원 전체 완료, A03-01~A03-04 완료, A03-05 진행 중, 나머지는 미시작이다.
 
 ### 1. Projectile Motion — 핵심
 
@@ -104,12 +104,12 @@
 
 파일: `Scripts/PropellerModel.mlx`  
 세부 목차: Motivation → Momentum theory → Blade element reasoning → Dimensional analysis → Modeling assumptions → Thrust model → Reaction torque model → Drag on a blade element → Torque → Impact on Quadcopter Design → Further Design Considerations  
-진도: 3/5
+진도: 4/5
 
 - [x] A03-01 — **Thrust model / Exercise 1**: 호버링에 필요한 프로펠러 각속도를 계산한다. 완료 조건: omega_hover를 작성하고 CheckEx1의 확인 결과와 단위를 제출한다.
 - [x] A03-02 — **Reaction torque / Exercise 2a**: 허브 부근의 유입각 변화에 답한다. 완료 조건: CheckEx2 a 결과와 물리적 이유를 기록한다.
 - [x] A03-03 — **Reaction torque / Exercise 2b**: 블레이드 끝 부근의 유입각 변화에 답한다. 완료 조건: CheckEx2 b 결과와 물리적 이유를 기록한다.
-- [ ] A03-04 — **Impact on Quadcopter Design / Try·Reflect**: SimplePropellerModel 함수로 추력·토크 곡선을 그린다. 완료 조건: 두 곡선의 단위와 제곱 의존성을 설명한다. 교재의 증가율 질문은 계수·단위 차이와 상대 증가율을 구분한다.
+- [x] A03-04 — **Impact on Quadcopter Design / Try·Reflect**: SimplePropellerModel 함수로 추력·토크 곡선을 그린다. 완료 조건: 두 곡선의 단위와 제곱 의존성을 설명한다. 교재의 증가율 질문은 계수·단위 차이와 상대 증가율을 구분한다.
 - [ ] A03-05 — **Exercise 3**: SimplePropellerModel.slx에 추력·토크 블록을 직접 구성한다. 완료 조건: 입력값·출력값을 MATLAB 함수 결과와 비교한다.
 
 ### 4. Quadcopter Basics — 핵심
@@ -388,6 +388,7 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 - A02-08 완료 근거: 사용자가 QuaternionExample을 실행해 모두 확인했다고 보고하고 코드 eul3=[0 89 0], eul4=[180 89 180], qdist3 = quaternion(deg2rad(eul3),'euler','ZYX','frame')을 제시했다(출력 화면은 보지 못함). 단위: 각도를 도로 적고 deg2rad로 라디안 변환, 회전 순서 ZYX, frame 회전. 튜터 검산: 두 오일러각은 (180°,0°,180°) 차이로 크게 달라 보이지만 피치 89° 부근이라 실제 회전 차이는 약 2°이다.
 - A03-01 완료 근거: 첨부 화면 — omega_hover = sqrt(M*g/(4*k_T)) = 351.4827 rad/s, CheckEx1 ‘Correct! The calculated hover speed matches the expected value. The propeller needs to be rotating at approximately 351 rad/s or 3356 rpm.’ 호버링 조건 4·kT·ω²=M·g에서 도출. 사용자의 total_propeller=M*g*4(21.1896)는 잘못된 계산이며 사용되지 않았다(무게는 M·g 하나이고 프로펠러 한 개는 M·g/4를 낸다). 단위: 3단원은 rad/s, 이후 단원은 회/분 기반 kT가 나오므로 혼용 주의.
 - A03-02·A03-03 완료 근거: 첨부 화면 — CheckEx2("increases","a") ‘Correct.’, CheckEx2("decreases","b") ‘Correct.’ 및 ‘This dependence on radial distance is why forward-flight propellers must be twisted.’ 사용자 설명: x가 허브에 가까울수록 분모 ωx가 작아져 tan(φ)가 커지고(φ 증가), 끝 쪽은 반대(φ 감소). 보충: 허브에서는 축 방향 유입이 지배해 φ가 90°에 가깝고 끝에서는 회전 속도가 지배해 φ가 0°에 가까워, 전진 비행 프로펠러는 반지름에 따라 피치각을 비틀어야 한다.
+- A03-04 완료 근거: 사용자 Reflect 답 — 추력/토크 비율이 거의 100배이고 그래프 차이는 k_T와 k_m 값의 차이 때문(정확히 1.8e-5/2.0e-7=90배). 보충: T=k_T·ω², Q=ε·k_m·ω²로 ω에 대한 제곱 의존성은 같아 ω가 2배면 둘 다 4배, 비율 T/Q=90은 ω와 무관. 단위가 N과 N·m로 달라 절대 크기보다 비율로 비교한다. 수치(튜터 계산): ω=900에서 T=14.58 N, Q=0.162 N·m. 사용자의 그래프 화면은 보지 못했다.
 - 보충 후보: 시간 간격, 속도·가속도, 수치 적분, 좌표계·회전행렬, 힘·토크, 관성, 피드백, 제어기 각 항. 이해 상태를 추정해 완료 처리하지 않는다.
 
 ## 10. 다음 수업과 업데이트 규칙
@@ -480,3 +481,5 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 | 2026-10-16 | A03-01: 프로펠러 모델 파일 위치 안내(Scripts/PropellerModel.mlx 존재). 사용자 코드의 식 sqrt(M*g/(4*k_T))는 맞았으나 변수 이름 omegaHover와 omega_hover가 달라 CheckEx1이 기본값 0을 받음을 설명. 이름을 맞춘 뒤 CheckEx1 ‘Correct’(351 rad/s, 3356 rpm) 확인. A03-02 Exercise 2 안내 | A03-01 | 교재 21/79=26.6%, 제작 0/20=0% | A03-02 CheckEx2 결과 대기 |
 
 | 2026-10-16 | A03-02·A03-03: CheckEx2 a ‘increases’ Correct, b ‘decreases’ Correct 확인. 사용자 설명(허브에 가까울수록 x가 작아 분모가 작아지고 tan가 커지며 끝 쪽은 반대)이 맞음. 전진 비행에서 블레이드를 비틀어야 하는 이유 보충. A03-04 안내 | A03-02, A03-03 | 교재 23/79=29.1%, 제작 0/20=0% | A03-04 추력·토크 곡선과 Reflect 대기 |
+
+| 2026-10-16 | A03-04 Reflect: 사용자가 ‘비율이 거의 100배(실제 90배)이고 그래프 차이는 k_T와 k_m 값의 차이 때문’이라고 답함. 맞음. 두 식 모두 ω²이라 비율 T/Q=90은 ω와 무관하고 단위가 달라 절대 비교가 아닌 비율로 봐야 함을 보충(ω=900에서 T=14.58 N, Q=0.162 N·m). A03-05 Exercise 3 안내 | A03-04 | 교재 24/79=30.4%, 제작 0/20=0% | A03-05 Simulink 모델 대기 |
