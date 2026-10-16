@@ -3,7 +3,7 @@
 기준일: 2026-10-16 (한국 시간)  
 진도표 버전: 1.0  
 학습 언어: 한국어  
-상태: 1·2·3단원 완료(12/12, 8/8, 5/5), 4단원 Quadcopter Basics A04-01~A04-05 완료(5/9), A04-06 시작 전
+상태: 1·2·3단원 완료(12/12, 8/8, 5/5), 4단원 Quadcopter Basics A04-01~A04-06 완료(6/9), A04-07 시작 전
 
 ## 1. 교재와 확인 범위
 
@@ -28,9 +28,9 @@
 | MATLAB 숙련도 | 기초 수준 |
 | 수학·제어 | 배운 경험 있음, 필요 개념은 기초부터 보충 |
 | 학습 시간 | 고정 일정 없음 |
-| 현재 위치 | 4단원 Quadcopter Basics / Estimate Constants, A04-06 시작 전 |
-| 마지막 실행 | 믹서 셀을 x형·+형 드롭다운으로 각각 실행(스크린샷 2장). +형 A: 행2 [0 −R·kT 0 R·kT], 행3 [R·kT 0 −R·kT 0], 행4 [km −km km −km] |
-| 다음 행동 | Estimate Constants 셀 실행(W, T_prop, N=4000, kT, km) 후 값과 단위 기록(A04-06) |
+| 현재 위치 | 4단원 Quadcopter Basics / Performance Curves, A04-07 시작 전 |
+| 마지막 실행 | Estimate Constants 셀 실행(스크린샷): W=12.7530 N, T_prop=3.1883 N, N=4000 rpm, kT=1.9927e-07, km=1.9927e-09 |
+| 다음 행동 | Performance Curves 셀 실행(N=0:1000:10000 rpm 스윕, 추력·모멘트 그래프) 후 4000 rpm에서의 값 기록(A04-07) |
 
 ## 3. 진행률 계산 규칙
 
@@ -57,8 +57,8 @@
 | 지표 | 완료/전체 | 진행률 |
 |---|---:|---:|
 | 공식 교재 본 단원 | 3/11 | 27.3% |
-| 공식 교재 기반 체크포인트 | 30/79 | 38.0% |
-| 핵심 체크포인트 | 30/53 | 56.6% |
+| 공식 교재 기반 체크포인트 | 31/79 | 39.2% |
+| 핵심 체크포인트 | 31/53 | 58.5% |
 | 개인 시뮬레이터 작업 | 0/20 | 0% |
 | 선택 3차원 시각화 | 0/1 | 미시작 |
 
@@ -116,14 +116,14 @@
 
 파일: `Scripts/QuadcopterBasics.mlx`  
 세부 목차: Quadcopter Coordinate System → Propeller Configuration → Motivating example → Simple Geometric Model → Simple Inertia Model → Inertia of Propellers → Inertia of Body → Thrust and yaw-drag model → Derive the Mixer → Estimate Constants → Performance Curves → Forces and Torques → Save the Parameter Values → Next Steps  
-진도: 5/9
+진도: 6/9
 
 - [x] A04-01 — **Simple Geometric Model**: 기체·프로펠러 질량과 위치를 계산한다. 완료 조건: 총질량과 프로펠러 번호·좌표·회전 방향을 기록한다.
 - [x] A04-02 — **Simple Inertia Model / plus**: +형의 관성행렬 계산을 실행한다. 완료 조건: Ixx·Iyy·Izz와 단위를 기록한다.
 - [x] A04-03 — **Simple Inertia Model / x·Reflect**: x형으로 바꾸어 관성 계산을 비교한다. 완료 조건: 형상·좌표 변경과 관성 결과의 관계를 설명한다.
 - [x] A04-04 — **Derive the Mixer**: 힘·모멘트 변환 행렬 A를 계산한다. 완료 조건: 입력이 회전속도의 제곱이라는 점과 각 행의 단위를 설명한다.
 - [x] A04-05 — **Derive the Mixer / configuration·Reflect**: 두 배치의 mixer를 비교한다. 완료 조건: 계산에 사용한 pB와 선택한 배치가 일치하는지 확인하고 부호 패턴을 기록한다.
-- [ ] A04-06 — **Estimate Constants**: 4000 회/분 호버 설계점으로 kT·km을 계산한다. 완료 조건: W·T_prop·kT·km과 속도 기준 단위를 기록한다.
+- [x] A04-06 — **Estimate Constants**: 4000 회/분 호버 설계점으로 kT·km을 계산한다. 완료 조건: W·T_prop·kT·km과 속도 기준 단위를 기록한다.
 - [ ] A04-07 — **Performance Curves**: 추력·모멘트 성능 곡선을 실행한다. 완료 조건: 그래프와 4000 회/분에서의 값을 기록한다.
 - [ ] A04-08 — **Forces and Torques**: 같은 속도의 네 프로펠러를 mixer에 입력한다. 완료 조건: 총추력−무게와 세 모멘트를 확인하고 회전 방향 관련 Reflect에 답한다.
 - [ ] A04-09 — **Save the Parameter Values**: 파라미터를 Data 폴더에 저장한다. 완료 조건: 실제 생성된 .mat 이름·배치·질량·관성·mixer를 확인한다.
@@ -395,6 +395,7 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 - A04-03 완료 근거: x형 실행 결과 화면(Ixx=Iyy=0.0061, Izz=0.0117, + 형과 동일) 및 사용자 Reflect 답 — '바뀌는 것은 pB 좌표와 Ibody 회전'. 튜터 보충: 대칭 때문에 이 모델에서 관성 수치는 두 형상이 같고, 형상은 pB(프로펠러 위치)와 몸체 45° 회전 유무로만 반영됨. 화면에서 configuration="x" 설정 여부는 확인 불가.
 - A04-04 완료 근거: 첨부 화면 — pB 드롭다운 'x configuration'으로 A 계산: 행1 [kT kT kT kT], 행2 [σ −σ −σ σ], 행3 [σ σ −σ −σ], 행4 [km −km km −km], σ=√2·R·kT/2, [T;Qx;Qy;Qz]=A·[ω1²..ω4²]. 튜터 예측과 일치. 사용자 Reflect 답: '모든 프로펠러를 같은 방향으로 돌리면 기체가 요 회전을 한다'(맞음; ε가 모두 같으면 Qz=km(ω1²+…+ω4²)로 반작용 토크가 상쇄되지 않음). 입력이 ω²이고 행별 단위(T[N], Qx·Qy·Qz[N·m])는 튜터가 설명했으며 사용자 서술은 아님. 정정: 교재 셀의 pB는 드롭다운으로 배치를 선택(이전에 '항상 x형'이라 한 튜터 설명은 틀림).
 - A04-05 완료 근거: 첨부 화면 2장 — 드롭다운 'x configuration'과 '+ configuration'에서 각각 A 계산. +형: 행1 [kT kT kT kT], 행2 [0 −R·kT 0 R·kT], 행3 [R·kT 0 −R·kT 0], 행4 [km −km km −km]. x형은 행2·3의 0이 없고 모든 성분이 ±σ(=√2·R·kT/2). 행1·행4(총추력·요)는 배치와 무관. 튜터 예측과 일치. 사용자는 '둘다 확인했어'라고 보고했으며 부호 패턴 해석은 튜터가 설명했다(사용자 서술 아님).
+- A04-06 완료 근거: 첨부 화면 — W=12.7530, T_prop=3.1883, N=4000, kT=1.9927e-07, km=1.9927e-09. 튜터 검산 W=(1.02+0.28)·9.81=12.753 N, T_prop=W/4=3.18825 N, kT=3.18825/4000²=1.99266e-7 N/rpm², km=0.01·kT 일치. 튜터 보충: rad/s 환산 kT=kT_rpm·(60/2π)²≈1.817e-5(3단원 값 1.8e-5와 같은 크기). 단위(N/rpm², N·m/rpm²)는 튜터가 설명, 사용자 서술 아님.
 - 보충 후보: 시간 간격, 속도·가속도, 수치 적분, 좌표계·회전행렬, 힘·토크, 관성, 피드백, 제어기 각 항. 이해 상태를 추정해 완료 처리하지 않는다.
 
 ## 10. 다음 수업과 업데이트 규칙
@@ -503,3 +504,5 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 | 2026-10-16 | A04-04: 사용자가 x형 믹서 행렬 A 화면 제출(튜터 예측과 일치)과 Reflect 답(같은 방향 회전 → 요 회전). 교재 pB가 드롭다운으로 배치를 고른다고 정정 | A04-04 | 교재 29/79=36.7%, 제작 0/20=0% | A04-05 + 형 믹서 비교 대기 |
 
 | 2026-10-16 | A04-05: 사용자가 x형·+형 믹서 행렬 화면 제출('둘다 확인했어'). 드롭다운과 결과 일치 확인, +형은 롤·피치가 각각 y·x축 프로펠러 쌍으로만 생기는 구조임을 설명 | A04-05 | 교재 30/79=38.0%, 제작 0/20=0% | A04-06 kT·km 계산 결과 대기 |
+
+| 2026-10-16 | A04-06: 사용자가 Estimate Constants 결과 제출(W=12.753, T_prop=3.1883, kT=1.9927e-7, km=1.9927e-9). 검산 일치. rpm 기준 단위와 rad/s 환산 설명 | A04-06 | 교재 31/79=39.2%, 제작 0/20=0% | A04-07 성능 곡선 대기 |
