@@ -1,9 +1,9 @@
 # MATLAB/Simulink 드론 시뮬레이션 개인 학습 진행 기록
 
-기준일: 2026-10-15 (한국 시간)  
+기준일: 2026-10-16 (한국 시간)  
 진도표 버전: 1.0  
 학습 언어: 한국어  
-상태: 1·2단원 완료(12/12, 8/8), 3단원 Propeller Model A03-01 시작 전
+상태: 1·2단원 완료(12/12, 8/8), 3단원 Propeller Model A03-01 완료, A03-02 진행 중
 
 ## 1. 교재와 확인 범위
 
@@ -28,9 +28,9 @@
 | MATLAB 숙련도 | 기초 수준 |
 | 수학·제어 | 배운 경험 있음, 필요 개념은 기초부터 보충 |
 | 학습 시간 | 고정 일정 없음 |
-| 현재 위치 | 3단원 Propeller Model / Thrust model Exercise 1, A03-01 시작 전 |
-| 마지막 실행 | QuaternionExample 실행 확인(사용자 보고): 오일러각을 도로 적고 deg2rad로 변환, quaternion(...,'euler','ZYX','frame')으로 사원수 생성 |
-| 다음 행동 | PropellerModel.mlx Exercise 1: M=0.54 kg, kT=1.072e-5, g=9.81에서 호버링 omega_hover(rad/s)를 직접 계산하고 CheckEx1 결과 제출(A03-01) |
+| 현재 위치 | 3단원 Propeller Model / Reaction torque Exercise 2a, A03-02 진행 중 |
+| 마지막 실행 | omega_hover = sqrt(M*g/(4*k_T)) = 351.4827 rad/s 실행, CheckEx1 ‘Correct! … approximately 351 rad/s or 3356 rpm.’ 확인 |
+| 다음 행동 | Exercise 2a·2b: 유입각 tan(φ)=(Vv+vi)/(ωx)가 허브 근처·끝 근처에서 증가/감소/동일 중 무엇인지 CheckEx2로 확인하고 물리적 이유 설명(A03-02, A03-03) |
 
 ## 3. 진행률 계산 규칙
 
@@ -57,14 +57,14 @@
 | 지표 | 완료/전체 | 진행률 |
 |---|---:|---:|
 | 공식 교재 본 단원 | 2/11 | 18.2% |
-| 공식 교재 기반 체크포인트 | 20/79 | 25.3% |
-| 핵심 체크포인트 | 20/53 | 37.7% |
+| 공식 교재 기반 체크포인트 | 21/79 | 26.6% |
+| 핵심 체크포인트 | 21/53 | 39.6% |
 | 개인 시뮬레이터 작업 | 0/20 | 0% |
 | 선택 3차원 시각화 | 0/1 | 미시작 |
 
 ## 4. 전체 단원과 학습 체크포인트
 
-각 항목 형식: ID — 원문 실습 위치 — 할 일 — 완료 조건. 1단원 전체 완료, 1·2단원 전체 완료, 나머지는 미시작이다.
+각 항목 형식: ID — 원문 실습 위치 — 할 일 — 완료 조건. 1단원 전체 완료, 1·2단원 전체 완료, A03-01 완료, A03-02 진행 중, 나머지는 미시작이다.
 
 ### 1. Projectile Motion — 핵심
 
@@ -104,9 +104,9 @@
 
 파일: `Scripts/PropellerModel.mlx`  
 세부 목차: Motivation → Momentum theory → Blade element reasoning → Dimensional analysis → Modeling assumptions → Thrust model → Reaction torque model → Drag on a blade element → Torque → Impact on Quadcopter Design → Further Design Considerations  
-진도: 0/5
+진도: 1/5
 
-- [ ] A03-01 — **Thrust model / Exercise 1**: 호버링에 필요한 프로펠러 각속도를 계산한다. 완료 조건: omega_hover를 작성하고 CheckEx1의 확인 결과와 단위를 제출한다.
+- [x] A03-01 — **Thrust model / Exercise 1**: 호버링에 필요한 프로펠러 각속도를 계산한다. 완료 조건: omega_hover를 작성하고 CheckEx1의 확인 결과와 단위를 제출한다.
 - [ ] A03-02 — **Reaction torque / Exercise 2a**: 허브 부근의 유입각 변화에 답한다. 완료 조건: CheckEx2 a 결과와 물리적 이유를 기록한다.
 - [ ] A03-03 — **Reaction torque / Exercise 2b**: 블레이드 끝 부근의 유입각 변화에 답한다. 완료 조건: CheckEx2 b 결과와 물리적 이유를 기록한다.
 - [ ] A03-04 — **Impact on Quadcopter Design / Try·Reflect**: SimplePropellerModel 함수로 추력·토크 곡선을 그린다. 완료 조건: 두 곡선의 단위와 제곱 의존성을 설명한다. 교재의 증가율 질문은 계수·단위 차이와 상대 증가율을 구분한다.
@@ -386,6 +386,7 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 - A02-06 완료 근거: 사용자가 경로(linspace 6개)와 for 안의 idx번째 rigidtform3d·pctransform으로 애니메이션을 완성했다(최종 코드 화면 확인). 마지막 값(회전 180·90·90, 이동 3·−3·3)에서 disp(mean) 결과 c=(0.0372, 0, 1.7251), 마지막 중심 (4.7251, −3.0372, 3.0). 튜터 검산: Rz90→Ry90→Rx180 순 적용 R·c=(1.7251, −0.0372, 0), +t=(4.7251, −3.0372, 3.0)로 일치(점군 중심이 원점에서 z 방향으로 1.7251 떨어져 있음). Reflect 답변: 매 시간 단계마다 투사체 운동 방정식으로 위치(Translation), 회전 운동 방정식으로 회전각을 계산해 rigidtform3d에 함께 전달해 위치와 방향 변환을 동시에 적용한다.
 - A02-07 완료 근거: 첨부 화면 — 6DOF (Euler Angles) 블록의 입력은 F_xyz(N)(Fx·Fy·Fz 슬라이더)와 M_xyz(N·m)(롤·피치·요 모멘트와 Mxx·Myy·Mzz 슬라이더), 출력은 V_e(m/s)·X_e(m)·φθψ(rad)·DCM_be·V_b(m/s)·ω_b(rad/s)·dω_b/dt·A_bb(m/s²). Inertial·Body Scope에 속도·위치·오일러각·몸체 회전율이 표시됨. Return Here 실행했다고 보고.
 - A02-08 완료 근거: 사용자가 QuaternionExample을 실행해 모두 확인했다고 보고하고 코드 eul3=[0 89 0], eul4=[180 89 180], qdist3 = quaternion(deg2rad(eul3),'euler','ZYX','frame')을 제시했다(출력 화면은 보지 못함). 단위: 각도를 도로 적고 deg2rad로 라디안 변환, 회전 순서 ZYX, frame 회전. 튜터 검산: 두 오일러각은 (180°,0°,180°) 차이로 크게 달라 보이지만 피치 89° 부근이라 실제 회전 차이는 약 2°이다.
+- A03-01 완료 근거: 첨부 화면 — omega_hover = sqrt(M*g/(4*k_T)) = 351.4827 rad/s, CheckEx1 ‘Correct! The calculated hover speed matches the expected value. The propeller needs to be rotating at approximately 351 rad/s or 3356 rpm.’ 호버링 조건 4·kT·ω²=M·g에서 도출. 사용자의 total_propeller=M*g*4(21.1896)는 잘못된 계산이며 사용되지 않았다(무게는 M·g 하나이고 프로펠러 한 개는 M·g/4를 낸다). 단위: 3단원은 rad/s, 이후 단원은 회/분 기반 kT가 나오므로 혼용 주의.
 - 보충 후보: 시간 간격, 속도·가속도, 수치 적분, 좌표계·회전행렬, 힘·토크, 관성, 피드백, 제어기 각 항. 이해 상태를 추정해 완료 처리하지 않는다.
 
 ## 10. 다음 수업과 업데이트 규칙
@@ -474,3 +475,5 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 | 2026-10-15 | A02-07: 6DOF 플랫폼 예제를 열고 실행한 화면 확인(6DOF Euler Angles 블록, 입력 F_xyz·M_xyz, 출력 속도·위치·오일러각·몸체 속도·회전율, Scope 결과). Return Here 실행 확인. 힘·모멘트→가속도→속도→위치(각도)의 이중 적분 관계 설명. A02-08 안내 | A02-07 | 교재 19/79=24.1%, 제작 0/20=0% | QuaternionExample 실행 결과 대기 |
 
 | 2026-10-15 | A02-08: 예제 실행·확인 보고와 코드(eul3=[0 89 0], eul4=[180 89 180], quaternion(deg2rad(...),'euler','ZYX','frame')) 제시. 각도 단위(도→deg2rad 라디안), 순서 ZYX, frame 확인. 두 오일러각의 실제 회전 차이가 약 2°임을 튜터가 검산. 2단원 완료. 3단원 교재 원문 확인 후 안내 | A02-08 | 교재 20/79=25.3%, 제작 0/20=0% | A03-01 omega_hover 계산 결과 대기 |
+
+| 2026-10-16 | A03-01: 프로펠러 모델 파일 위치 안내(Scripts/PropellerModel.mlx 존재). 사용자 코드의 식 sqrt(M*g/(4*k_T))는 맞았으나 변수 이름 omegaHover와 omega_hover가 달라 CheckEx1이 기본값 0을 받음을 설명. 이름을 맞춘 뒤 CheckEx1 ‘Correct’(351 rad/s, 3356 rpm) 확인. A03-02 Exercise 2 안내 | A03-01 | 교재 21/79=26.6%, 제작 0/20=0% | A03-02 CheckEx2 결과 대기 |
