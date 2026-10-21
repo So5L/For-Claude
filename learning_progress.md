@@ -28,9 +28,9 @@
 | MATLAB 숙련도 | 기초 수준 |
 | 수학·제어 | 배운 경험 있음, 필요 개념은 기초부터 보충 |
 | 학습 시간 | 고정 일정 없음 |
-| 현재 위치 | 6단원 Quadcopter Control, 진행 중 3/13(A06-04 시작 전) |
-| 마지막 실행 | A06-03: P=80, I=0, D=0 실행(고도 0~약 43 m 사이 지속 진동, 주기 10초) |
-| 다음 행동 | A06-04: P=120, I=0, D=40 실행, P=80 결과와 비교 |
+| 현재 위치 | 6단원 Quadcopter Control, 진행 중 4/13(A06-05 시작 전) |
+| 마지막 실행 | A06-04: P=120, I=0, D=40 실행(진동 감쇠, 첫 고점 약 60 m, 약 40초 정착, 시작 스파이크 약 86,000 rpm) |
+| 다음 행동 | A06-05: P=200, I=50, D=150 실행 후 목표·실제 고도와 세 항의 역할 설명 |
 
 ## 3. 진행률 계산 규칙
 
@@ -57,8 +57,8 @@
 | 지표 | 완료/전체 | 진행률 |
 |---|---:|---:|
 | 공식 교재 본 단원 | 5/11 | 45.5% |
-| 공식 교재 기반 체크포인트 | 43/79 | 54.4% |
-| 핵심 체크포인트 | 43/53 | 81.1% |
+| 공식 교재 기반 체크포인트 | 44/79 | 55.7% |
+| 핵심 체크포인트 | 44/53 | 83.0% |
 | 개인 시뮬레이터 작업 | 0/20 | 0% |
 | 선택 3차원 시각화 | 0/1 | 미시작 |
 
@@ -145,12 +145,12 @@
 
 파일: `Scripts/QuadcopterControl.mlx`  
 세부 목차: Loading up Quadcopter Parameters → Equation of Motion (1D) → Modeling Propeller Forces → Propeller Thrust vs Speed → Closed-Loop Feedback Control → Demonstration: Tuning the PID Controller → Proportional → Derivative → PID → PID - Anti-windup + Saturation → Quadcopter Hover Control → Quadcopter Position Control using multiple PID loops → Further Resources  
-진도: 3/13
+진도: 4/13
 
 - [x] A06-01 — **Propeller Thrust vs Speed**: 파라미터를 불러와 추력 곡선을 실행한다. 완료 조건: 속도·추력 단위와 수직 운동식의 질량·부호를 확인한다.
 - [x] A06-02 — **Closed-Loop / Exercise·Initialization**: QuadcopterPID_Vertical.slx에 PID를 연결하고 적분기 초기값을 설정한다. 완료 조건: 오차→제어기→prop_speed 경로와 초기값 4000을 기록한다.
 - [x] A06-03 — **Proportional / Try**: P=80, I=0, D=0으로 실행한다. 완료 조건: 목표·실제 고도 및 진동 결과를 기록한다.
-- [ ] A06-04 — **Derivative / Try**: P=120, I=0, D=40으로 실행한다. 완료 조건: 앞선 결과와 응답 차이를 설명한다.
+- [x] A06-04 — **Derivative / Try**: P=120, I=0, D=40으로 실행한다. 완료 조건: 앞선 결과와 응답 차이를 설명한다.
 - [ ] A06-05 — **PID / Try**: P=200, I=50, D=150으로 실행한다. 완료 조건: 목표·실제 고도와 세 제어항의 역할을 설명한다.
 - [ ] A06-06 — **PID - Anti-windup + Saturation**: 교재의 출력 제한·적분기 제한·역계산·필터 설정을 적용한다. 완료 조건: 설정표와 제한 적용 전후 고도·명령 결과를 제출한다.
 - [ ] A06-07 — **Quadcopter Hover Control**: UAV_Hover_Sim.slx에 고도 제어기를 구현한다. 완료 조건: 목표 높이로 이동하고 호버하는 응답을 제출한다.
@@ -411,6 +411,7 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 - A06-01 완료 근거: load x_quad_params.mat kT quad_m W M g 실행(kT=1.9927e-07, M=1.3, W=12.753, g=9.81, 오류 없음, 4단원 저장 파일에 변수 모두 존재). 추력 곡선 그래프(가로 Speed rpm 0~10000, 세로 Thrust N 0~20, 10000 rpm 약 20 N) 제출. 원문에는 이 구간의 Try·Exercise·Reflect 질문이 없다. 튜터가 비선형 곡선·가속도 부호·투사체와의 차이를 설명했다(사용자 요청).
 - A06-02 완료 근거: 사용자가 모델 화면 제출 — set altitude 20 → Sum(+ −) → e → PID Controller → prop_speed → Subsystem(altitude) → measurement → Sum 피드백, 오른쪽 Scope·Mux 연결 확인. Initialization 탭에서 소스 내부, 적분기 4000, 필터 0 확인. 구조는 튜터가 원문 .slx 내부를 읽은 것과 일치(안쪽: prop_speed→제곱→×kT→×4=thrust, M→×g=gravity, Sum(+ −)→×1/M→a→적분→z′→적분→z). PID 이득은 기본값(A06-03에서 설정).
 - A06-03 완료 근거: P=80, I=0, D=0 Scope 화면 제출(0~60초). altitude:1(노랑)=목표 20, altitude:2(파랑)=실제 고도가 0~약 43 m를 주기 약 10초로 진폭 감소 없이 진동. prop_speed 약 2200~5600 rpm(시작 5600), thrust 시작 약 25 N. 튜터 예측(5600 rpm, 25 N, 주기 약 10초=2π√(M/k), k=P·8·kT·4000≈0.51 N/m)과 일치. 위쪽 43 m는 추력이 속도 제곱에 비례하는 비선형성 때문(아래 +12.2 N, 위 −8.2 N)으로 설명. 감쇠 요소가 없어 진폭 유지.
+- A06-04 완료 근거: P=120, I=0, D=40 Scope 화면 제출. 고도가 약 60 m 첫 고점 후 감쇠 진동(약 8초 주기)하며 약 40초 이후 20 m 근처 정착(눈대중). prop_speed 축 ×10³ 약 90, thrust 축 약 6000 N: t=0 목표 점프에 대한 미분 킥(D·N·e=40·100·20=80,000 rpm +6400, 필터 계수 기본 100, 지속 약 0.01 s, 튜터 근사 속도 약 20 m/s)이 원인. P=80 대비 진폭 감소는 D가 속도 비례 감쇠 역할을 하기 때문(튜터 근사 ζ≈0.13, 주기 약 8.3초). 사용자 서술 설명은 없음.
 - 튜터 정정(5단원): Scope 해석 중 ‘θ가 −90°를 넘어 뒤집힘’은 틀린 설명이었다. 큰 Scope(V_e, X_e, φθψ, q 혼합 축)의 하늘색 선(약 −1.8)은 범례 미확인으로 정체 불명이다.
 - 보충 후보: 시간 간격, 속도·가속도, 수치 적분, 좌표계·회전행렬, 힘·토크, 관성, 피드백, 제어기 각 항. 이해 상태를 추정해 완료 처리하지 않는다.
 
@@ -553,6 +554,8 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 | 2026-10-21 | A06-02: 폐루프 개념·모델 구조·오차 부호·PID 항 개요 설명. 사용자가 PID 연결과 적분기 4000 설정 화면 제출 | A06-02 | 교재 42/79=53.2%, 핵심 42/53=79.2%, 제작 0/20=0% | A06-03 |
 
 | 2026-10-21 | A06-03: P=80 Scope 제출. 주기 10초·진폭 유지 확인, 원인(스프링 비유, 비선형) 설명. A06-04 안내 | A06-03 | 교재 43/79=54.4%, 핵심 43/53=81.1%, 제작 0/20=0% | A06-04 |
+
+| 2026-10-21 | A06-04: P=120, I=0, D=40 Scope 제출. 감쇠·정착(약 40초)·첫 고점 60 m·시작 스파이크(미분 킥) 설명. A06-05 안내 | A06-04 | 교재 44/79=55.7%, 핵심 44/53=83.0%, 제작 0/20=0% | A06-05 |
 
 ## 12. 단원 총정리
 
