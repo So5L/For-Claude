@@ -28,9 +28,9 @@
 | MATLAB 숙련도 | 기초 수준 |
 | 수학·제어 | 배운 경험 있음, 필요 개념은 기초부터 보충 |
 | 학습 시간 | 고정 일정 없음 |
-| 현재 위치 | 6단원 Quadcopter Control, 진행 중 1/13(A06-02 시작 전) |
-| 마지막 실행 | A06-01 추력 곡선 그래프 제출, 변수 로드 확인 |
-| 다음 행동 | A06-02: 폐루프 피드백 개념 설명 후 QuadcopterPID_Vertical.slx 열고 PID Controller 블록 추가(원문 Exercise) |
+| 현재 위치 | 6단원 Quadcopter Control, 진행 중 2/13(A06-03 시작 전) |
+| 마지막 실행 | A06-02: PID Controller 연결(e→PID→prop_speed), 적분기 초기값 4000 설정 |
+| 다음 행동 | A06-03: P=80, I=0, D=0으로 실행해 목표·실제 고도와 진동 확인 |
 
 ## 3. 진행률 계산 규칙
 
@@ -57,8 +57,8 @@
 | 지표 | 완료/전체 | 진행률 |
 |---|---:|---:|
 | 공식 교재 본 단원 | 5/11 | 45.5% |
-| 공식 교재 기반 체크포인트 | 41/79 | 51.9% |
-| 핵심 체크포인트 | 41/53 | 77.4% |
+| 공식 교재 기반 체크포인트 | 42/79 | 53.2% |
+| 핵심 체크포인트 | 42/53 | 79.2% |
 | 개인 시뮬레이터 작업 | 0/20 | 0% |
 | 선택 3차원 시각화 | 0/1 | 미시작 |
 
@@ -145,10 +145,10 @@
 
 파일: `Scripts/QuadcopterControl.mlx`  
 세부 목차: Loading up Quadcopter Parameters → Equation of Motion (1D) → Modeling Propeller Forces → Propeller Thrust vs Speed → Closed-Loop Feedback Control → Demonstration: Tuning the PID Controller → Proportional → Derivative → PID → PID - Anti-windup + Saturation → Quadcopter Hover Control → Quadcopter Position Control using multiple PID loops → Further Resources  
-진도: 1/13
+진도: 2/13
 
 - [x] A06-01 — **Propeller Thrust vs Speed**: 파라미터를 불러와 추력 곡선을 실행한다. 완료 조건: 속도·추력 단위와 수직 운동식의 질량·부호를 확인한다.
-- [ ] A06-02 — **Closed-Loop / Exercise·Initialization**: QuadcopterPID_Vertical.slx에 PID를 연결하고 적분기 초기값을 설정한다. 완료 조건: 오차→제어기→prop_speed 경로와 초기값 4000을 기록한다.
+- [x] A06-02 — **Closed-Loop / Exercise·Initialization**: QuadcopterPID_Vertical.slx에 PID를 연결하고 적분기 초기값을 설정한다. 완료 조건: 오차→제어기→prop_speed 경로와 초기값 4000을 기록한다.
 - [ ] A06-03 — **Proportional / Try**: P=80, I=0, D=0으로 실행한다. 완료 조건: 목표·실제 고도 및 진동 결과를 기록한다.
 - [ ] A06-04 — **Derivative / Try**: P=120, I=0, D=40으로 실행한다. 완료 조건: 앞선 결과와 응답 차이를 설명한다.
 - [ ] A06-05 — **PID / Try**: P=200, I=50, D=150으로 실행한다. 완료 조건: 목표·실제 고도와 세 제어항의 역할을 설명한다.
@@ -409,6 +409,7 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 - A05-05 완료 근거: 왼쪽 roll 입력 w=[4000 4025 4025 4000]에서 East −40 m, Fy −4.6 N(오른쪽 roll과 대칭). Reflect 사용자 답: 1번만 올리면 x형은 roll과 pitch 둘 다 +, +형은 pitch만 +. mixer 행(x형 [σ −σ −σ σ]·[σ σ −σ −σ], +형 [0 −R·kT 0 R·kT]·[R·kT 0 −R·kT 0])과 일치.
 - A05-06 완료 근거: 반시계 w=[3975 4025 3975 4025]에서 힘 Scope Fx·Fy≈0, Fz≈−5×10⁻⁴ N이고 큰 Scope의 파란 선이 −0.08(계산 ψ=½·(Qz/I)·t²=−0.080 rad와 일치, 범례 미확인). 시계 w=[4025 3975 4025 3975]에서 +0.08. 총추력 비 sum(w.^2)/(4*4000^2)=1.0000(정확히 1.0000391). 시계 Fz 축 숫자(−89.67×10⁻⁴)가 반시계(−49.8×10⁻⁵)와 달라 보이나 원인 미확인(둘 다 0에 가까움). 사용자 Reflect 답: 시계는 ψ가 +로 바뀜(올리는 쌍을 바꿈).
 - A06-01 완료 근거: load x_quad_params.mat kT quad_m W M g 실행(kT=1.9927e-07, M=1.3, W=12.753, g=9.81, 오류 없음, 4단원 저장 파일에 변수 모두 존재). 추력 곡선 그래프(가로 Speed rpm 0~10000, 세로 Thrust N 0~20, 10000 rpm 약 20 N) 제출. 원문에는 이 구간의 Try·Exercise·Reflect 질문이 없다. 튜터가 비선형 곡선·가속도 부호·투사체와의 차이를 설명했다(사용자 요청).
+- A06-02 완료 근거: 사용자가 모델 화면 제출 — set altitude 20 → Sum(+ −) → e → PID Controller → prop_speed → Subsystem(altitude) → measurement → Sum 피드백, 오른쪽 Scope·Mux 연결 확인. Initialization 탭에서 소스 내부, 적분기 4000, 필터 0 확인. 구조는 튜터가 원문 .slx 내부를 읽은 것과 일치(안쪽: prop_speed→제곱→×kT→×4=thrust, M→×g=gravity, Sum(+ −)→×1/M→a→적분→z′→적분→z). PID 이득은 기본값(A06-03에서 설정).
 - 튜터 정정(5단원): Scope 해석 중 ‘θ가 −90°를 넘어 뒤집힘’은 틀린 설명이었다. 큰 Scope(V_e, X_e, φθψ, q 혼합 축)의 하늘색 선(약 −1.8)은 범례 미확인으로 정체 불명이다.
 - 보충 후보: 시간 간격, 속도·가속도, 수치 적분, 좌표계·회전행렬, 힘·토크, 관성, 피드백, 제어기 각 항. 이해 상태를 추정해 완료 처리하지 않는다.
 
@@ -547,6 +548,8 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 | 2026-10-20 | 6단원 시작. 원문 확인(첫 셀이 x_quad_params.mat에서 kT quad_m W M g를 불러옴, 직접 저장한 파일에 M·g가 들어 있는지는 미확인). A06-01 안내 | 추가 완료 없음 | 교재 40/79=50.6%, 핵심 40/53=75.5%, 제작 0/20=0% | A06-01 결과 대기 |
 
 | 2026-10-21 | A06-01: 파라미터 불러오기 확인(M·g 포함), 추력 곡선 그래프 제출. 곡선이 휘는 이유, 가속도 양수의 의미, 투사체와의 차이를 상세 설명 | A06-01 | 교재 41/79=51.9%, 핵심 41/53=77.4%, 제작 0/20=0% | A06-02 |
+
+| 2026-10-21 | A06-02: 폐루프 개념·모델 구조·오차 부호·PID 항 개요 설명. 사용자가 PID 연결과 적분기 4000 설정 화면 제출 | A06-02 | 교재 42/79=53.2%, 핵심 42/53=79.2%, 제작 0/20=0% | A06-03 |
 
 ## 12. 단원 총정리
 
