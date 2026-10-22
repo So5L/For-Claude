@@ -3,7 +3,7 @@
 기준일: 2026-10-16 (한국 시간)  
 진도표 버전: 1.0  
 학습 언어: 한국어  
-상태: 1·2·3·4단원 완료(12/12, 8/8, 5/5, 9/9), 5단원 완료(6/6), 6단원 Quadcopter Control 진행 중(1/13: A06-01 완료)
+상태: 1·2·3·4단원 완료(12/12, 8/8, 5/5, 9/9), 5단원 완료(6/6), 6단원 Quadcopter Control 완료(13/13), 선택 7~11단원·개인 시뮬레이터 제작 대기
 
 ## 1. 교재와 확인 범위
 
@@ -28,9 +28,9 @@
 | MATLAB 숙련도 | 기초 수준 |
 | 수학·제어 | 배운 경험 있음, 필요 개념은 기초부터 보충 |
 | 학습 시간 | 고정 일정 없음 |
-| 현재 위치 | 6단원 Quadcopter Control, 진행 중 12/13(A06-13 시작 전) |
-| 마지막 실행 | A06-12: Yaw=pi/2 실행(고도 5, X=8, Y=4): yaw 약 1.7 rad 오버슈트 후 1.57 정착, 위치는 8·4 도달 |
-| 다음 행동 | A06-13 Reflect: Propeller Speed 하위 시스템을 열어 mixer·부호 있는 제곱근의 의미와 물리적 제한을 실제 블록값으로 설명 |
+| 현재 위치 | 6단원 완료(핵심 1~6단원 모두 완료), 다음은 사용자 선택: 7단원(선택 심화) 또는 개인 시뮬레이터 제작(B01) |
+| 마지막 실행 | A06-13 Reflect 답변 제출, Propeller Speed 하위 시스템 화면 확인, 6단원 총정리 작성 |
+| 다음 행동 | 사용자 선택: B01 개인 시뮬레이터 제작 시작(권장) 또는 7단원 Multidomain(Simscape Electrical·Driveline 미설치 확인 필요) |
 
 ## 3. 진행률 계산 규칙
 
@@ -56,9 +56,9 @@
 
 | 지표 | 완료/전체 | 진행률 |
 |---|---:|---:|
-| 공식 교재 본 단원 | 5/11 | 45.5% |
-| 공식 교재 기반 체크포인트 | 52/79 | 65.8% |
-| 핵심 체크포인트 | 52/53 | 98.1% |
+| 공식 교재 본 단원 | 6/11 | 54.5% |
+| 공식 교재 기반 체크포인트 | 53/79 | 67.1% |
+| 핵심 체크포인트 | 53/53 | 100.0% |
 | 개인 시뮬레이터 작업 | 0/20 | 0% |
 | 선택 3차원 시각화 | 0/1 | 미시작 |
 
@@ -145,7 +145,7 @@
 
 파일: `Scripts/QuadcopterControl.mlx`  
 세부 목차: Loading up Quadcopter Parameters → Equation of Motion (1D) → Modeling Propeller Forces → Propeller Thrust vs Speed → Closed-Loop Feedback Control → Demonstration: Tuning the PID Controller → Proportional → Derivative → PID → PID - Anti-windup + Saturation → Quadcopter Hover Control → Quadcopter Position Control using multiple PID loops → Further Resources  
-진도: 12/13
+진도: 13/13
 
 - [x] A06-01 — **Propeller Thrust vs Speed**: 파라미터를 불러와 추력 곡선을 실행한다. 완료 조건: 속도·추력 단위와 수직 운동식의 질량·부호를 확인한다.
 - [x] A06-02 — **Closed-Loop / Exercise·Initialization**: QuadcopterPID_Vertical.slx에 PID를 연결하고 적분기 초기값을 설정한다. 완료 조건: 오차→제어기→prop_speed 경로와 초기값 4000을 기록한다.
@@ -159,7 +159,7 @@
 - [x] A06-10 — **Position Control / altitude**: 목표 고도를 변경한다. 완료 조건: 목표·실제 고도와 애니메이션 결과를 비교한다.
 - [x] A06-11 — **Position Control / X and Y**: X·Y 목표를 변경한다. 완료 조건: 목표·실제 위치와 roll·pitch의 관계를 기록한다.
 - [x] A06-12 — **Position Control / yaw**: yaw 목표를 변경한다. 완료 조건: 목표·실제 yaw와 회전 단위를 기록한다.
-- [ ] A06-13 — **Position Control / Reflect**: Propeller Speed 하위 시스템을 조사한다. 완료 조건: mixer·부호 있는 제곱근의 의미와 물리적 제한을 실제 블록값을 근거로 설명한다.
+- [x] A06-13 — **Position Control / Reflect**: Propeller Speed 하위 시스템을 조사한다. 완료 조건: mixer·부호 있는 제곱근의 의미와 물리적 제한을 실제 블록값을 근거로 설명한다.
 
 ### 7. Multidomain Physical Modeling — 선택 심화
 
@@ -419,6 +419,7 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 - A06-10 완료 근거: 모델 화면(Altitude 20), 애니메이션(Up 약 20까지 수직 상승 후 East·North 이동), Scopes 4개 화면 제출. <Xe>:3(NED 아래 양)이 0→약 −21(오버슈트 약 5%)→−20, 정착 약 3초. <Ve>:3은 시작 약 −70 m/s(위 방향)에서 약 1초 내 0 — 교재 상수가 비현실적임(원문 지적). t=5 s에 X=4(<Xe>:1), Y=8(<Xe>:2)로 이동, 약 11~12초 정착. <rpy>(roll, pitch, yaw 순): roll(노랑) +0.11 rad(약 5~7.7 s), pitch(파랑) −0.105 rad(약 5~6.8 s)로 ±0.1 rad 제한 근처 포화 후 반대 방향(제동)으로 약 ∓0.11 → 감쇠 진동(약 15 s). Y=8이 더 길어 roll 포화가 더 오래 지속. yaw는 거의 0(±0.01). <wb>는 시작 5 s 이후 최대 약 ±0.6 rad/s. 사용자 서술 설명 없음.
 - A06-11 완료 근거: Altitude 5, X Step 8(North), Y Step 4(East)로 변경해 실행한 애니메이션과 Scopes 제출. <Xe>:1(North) 8, <Xe>:2(East) 4, <Xe>:3 −5(오버슈트 약 6%, 약 −5.3), 약 12초 정착. <Ve>:3 시작 약 −18 m/s(고도 20에서는 약 −70: 오차에 비례, 3.5~3.6 m/s당 1 m). <rpy>에서 pitch(파랑)가 −0.105 rad로 약 5~7.6 s, roll(노랑)이 +0.11 rad로 약 5~6.4 s 포화 후 반대 방향 제동·감쇠 진동 — 이전(X=4·Y=8)과 포화 길이가 서로 바뀜(먼 목표 방향의 각도가 더 오래 포화). 애니메이션의 3차원 높이 눈금은 투영 때문에 읽기 어려우니 Scope 값 기준. 사용자 서술 설명 없음(목표값만 보고).
 - A06-12 완료 근거: Yaw 상수를 pi/2(라디안)로 변경, 고도 5·X=8·Y=4로 실행한 애니메이션과 Scopes 제출. <rpy>:3(yaw)이 약 0.5 s에 약 1.7 rad(오버슈트 약 8%) 후 약 2~3 s에 1.57 rad 정착, <wb>:3 시작 약 6 rad/s(약 340°/s)에서 약 1.5 s 내 0. <Xe>는 North 8, East 4, 고도 −5로 이전(yaw=0)과 같은 값에 정착(약 12 s). yaw가 양수=위에서 볼 때 시계(NED). 모델의 XY Control Subsystem1이 cos·sin(yaw)로 위치 오차를 몸체 방향으로 돌려 roll·pitch 명령으로 변환하는 구조(원문 파일 확인). roll·pitch의 세부 파형 변화는 사용자와 비교하지 않음. 사용자 서술 설명 없음.
+- A06-13 완료 근거: XY_Control의 Propeller Speed 하위 시스템 화면 제출(Constant [1 1 1 1]→Mass 1→Direction −1→Gain 9.81/4, Mux(Thrust·Roll·Pitch·Yaw)→Motor Mixing Matrix→MatrixMultiply→Sum→SignedSqrt→Propeller Speed). 사용자 Reflect 답: 행렬의 부호는 프로펠러별 세기·회전 방향(시계)에 해당, 4로 나눈 중력은 추력과 비례하는 양, 제곱근은 음수를 양수로 바꿔 반대 방향 명령이 같은 방향으로 가속해 폭주. 튜터 보완: 행렬은 4단원 mixer A의 반대 방향(힘·모멘트→ω²)이며 행이 서로 직교(±0.5)해 역행렬이 전치와 같다. A의 Qx·Qy·Qz 행 부호 패턴이 이 행렬의 Roll·Pitch·Yaw 열에 부호만 반대로 나타남. 문제는 제곱근이 아니라 제곱(u²)이 부호를 잃게 하는 것(A06-05), 부호 있는 제곱근 |u|·u와 짝(Angular Velocity Squared)이 부호를 보존해 이를 방지. 이 모델은 Mass=1, g=9.81/4 값을 쓴다(현실적이지 않은 상수).
 - 튜터 정정(5단원): Scope 해석 중 ‘θ가 −90°를 넘어 뒤집힘’은 틀린 설명이었다. 큰 Scope(V_e, X_e, φθψ, q 혼합 축)의 하늘색 선(약 −1.8)은 범례 미확인으로 정체 불명이다.
 - 보충 후보: 시간 간격, 속도·가속도, 수치 적분, 좌표계·회전행렬, 힘·토크, 관성, 피드백, 제어기 각 항. 이해 상태를 추정해 완료 처리하지 않는다.
 
@@ -580,6 +581,8 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 
 | 2026-10-22 | A06-12: Yaw=pi/2 실행. yaw 약 8% 오버슈트 후 1.57 rad 정착, 위치 목표(8·4)는 동일. 좌표 회전 구조 설명. A06-13 Reflect 안내 | A06-12 | 교재 52/79=65.8%, 핵심 52/53=98.1%, 제작 0/20=0% | A06-13 |
 
+| 2026-10-22 | A06-13: Propeller Speed 하위 시스템 Reflect 답변. 부호 있는 제곱근·mixer 설명, 6단원 완료·총정리 추가. 핵심 53/53 완료 | A06-13 | 교재 53/79=67.1%, 핵심 53/53=100%, 제작 0/20=0% | 다음 단계 선택 |
+
 ## 12. 단원 총정리
 
 ### 4단원 Quadcopter Basics 총정리 (2026-10-16, 9/9 완료)
@@ -604,3 +607,14 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 2. 실제로 한 것: x형으로 첫 셀 실행(드롭다운), A05-01~06 모두 w를 직접 바꿔 sim 실행·화면 확인, 힘 Scope와 큰 Scope(범례 미확인) 해석, 6DOF 블록 파라미터 확인. 새로 만든 파일은 없음(.mlx 수정 포함).
 3. 주의사항: 6DOF 블록은 Mass 1.0·Inertia eye(3)으로 4단원 기체(1.3 kg, 0.0061)와 다름(상승·각가속도 검산으로 확인). 호버는 무관. 튜터 설명 오류 정정: 전진 입력을 처음 앞 1·2번으로 읽은 건 맞았지만 w=[4025 4000 4000 4025]를 전진으로 오해한 건 사용자 실험으로 roll임을 확정, ‘θ가 −90°를 넘어 뒤집힘’은 틀림(10초 약 −21°). 애니메이션은 항상 +형 기체를 그림. w를 설정하고 같은 셀에서 sim 실행해야 함. 큰 Scope 신호 이름은 범례로 확인하지 못함.
 4. 다음 단원 연결: 6단원 Quadcopter Control에서 PID 피드백으로 고도·자세를 안정화한다. 5단원의 w 조합은 제어기가 자동 계산할 입력이다. 개인 제작(B)에서는 6DOF 질량·관성을 4단원 값과 일치시킨다.
+
+### 6단원 Quadcopter Control 총정리 (2026-10-22, 13/13 완료)
+1. 핵심 개념·식·단위
+   - 수직 운동: z̈ = (4kT·N² − M·g)/M (위쪽 양, 단위 m/s²). 추력은 속도 제곱에 비례(비선형), 호버 4000 rpm에서 추력 12.753 N = 무게. 원문 식의 질량 나눗셈 누락에 주의.
+   - 폐루프: e = 목표 − 측정, 음의 피드백. P는 스프링(오차에 비례), D는 속도 비례 감쇠, I는 오차 누적(정착값 보정). 적분기 초기값 4000 = 호버 기준.
+   - 실행 결과: P=80 → 주기 약 10초로 계속 진동. P=120·D=40 → 감쇠하나 약 40초 정착, 시작 미분 킥(86,000 rpm). P=200·I=50·D=150(제한 없음) → t=0.376 s에서 발산(음수 명령의 제곱 + 미분 킥). 제한 0~10000·back-calculation 1·적분기 제한·N=10 → 오버슈트 약 10%, 12~15초 정착. UAV_Hover_Sim 5 m(같은 이득) 오버슈트 약 64% → PID Tuner(P=116.48, I=17.24, D=193.20, N=17.25) 오버슈트 약 5%, 정착 약 20초(Tuner 예측보다 느림).
+   - 위치 제어는 직렬: 위치 오차 → 원하는 roll·pitch(±0.1 rad 제한) → 자세 제어 → mixer(힘·모멘트→ω², 부호 있는 제곱근) → 프로펠러. X는 pitch(−), Y는 roll(+). yaw는 라디안, 양수=위에서 볼 때 시계. 위치 오차는 cos·sin(yaw)로 몸체 방향으로 회전.
+   - 시간 규모: 고도·yaw 약 2~3초, 수평 위치 약 12초(기울이고 가속·감속 2단계).
+2. 실제로 한 것: QuadcopterPID_Vertical.slx(PID 추가·설정), UAV_Hover_Sim.slx(PID 복사·Tuner), XY_Control.slx(고도 20·5, X·Y, yaw=pi/2 변경 실행). 수정한 모델 파일의 저장 여부와 파일명은 확인하지 못함.
+3. 주의사항: 6DOF 블록 Mass 1.0·Inertia eye(3), XY_Control Mass 1·g 9.81/4 등 교재 상수는 현실적이지 않다. 제한 없는 PID는 발산할 수 있고 Tuner(선형 근사) 예측과 실제 응답이 다르다. Scope 신호는 순서(:1,:2,:3)로 해석(NED 위치·roll·pitch·yaw). 제곱(u²)은 부호를 잃게 하지만 부호 있는 제곱근·제곱 한 쌍은 부호를 보존. 큰 Scope 신호의 범례는 일부 확인하지 못함.
+4. 다음 연결: 핵심 1~6단원 완료(53/53). 선택 7~11단원(총 26개)은 Simscape Electrical·Driveline 등 미설치 제품 확인이 필요한 부분이 있다. 개인 시뮬레이터 제작(B01~B20)은 4단원 파라미터(x_quad_params.mat)와 6단원 PID·제한·mixer를 직접 구현해 확인한다. 개인 제작에서는 질량·관성을 4단원 값과 일치시킨다.
