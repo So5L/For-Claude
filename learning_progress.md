@@ -28,9 +28,9 @@
 | MATLAB 숙련도 | 기초 수준 |
 | 수학·제어 | 배운 경험 있음, 필요 개념은 기초부터 보충 |
 | 학습 시간 | 고정 일정 없음 |
-| 현재 위치 | 6단원 Quadcopter Control, 진행 중 10/13(A06-11 시작 전) |
-| 마지막 실행 | A06-10: Altitude를 20으로 변경해 실행(고도 약 1~3초에 20 m, 오버슈트 약 5%, 이후 X=4·Y=8 이동) |
-| 다음 행동 | A06-11: X·Y 목표값을 바꿔 실행하고 목표·실제 위치와 roll·pitch 관계 확인 |
+| 현재 위치 | 6단원 Quadcopter Control, 진행 중 11/13(A06-12 시작 전) |
+| 마지막 실행 | A06-11: Altitude 5, X=8, Y=4로 실행(North 8·East 4 도달, pitch 포화 약 2.6 s·roll 약 1.4 s) |
+| 다음 행동 | A06-12: Yaw 목표(라디안)를 바꿔 실행하고 목표·실제 yaw와 회전 단위 확인 |
 
 ## 3. 진행률 계산 규칙
 
@@ -57,8 +57,8 @@
 | 지표 | 완료/전체 | 진행률 |
 |---|---:|---:|
 | 공식 교재 본 단원 | 5/11 | 45.5% |
-| 공식 교재 기반 체크포인트 | 50/79 | 63.3% |
-| 핵심 체크포인트 | 50/53 | 94.3% |
+| 공식 교재 기반 체크포인트 | 51/79 | 64.6% |
+| 핵심 체크포인트 | 51/53 | 96.2% |
 | 개인 시뮬레이터 작업 | 0/20 | 0% |
 | 선택 3차원 시각화 | 0/1 | 미시작 |
 
@@ -145,7 +145,7 @@
 
 파일: `Scripts/QuadcopterControl.mlx`  
 세부 목차: Loading up Quadcopter Parameters → Equation of Motion (1D) → Modeling Propeller Forces → Propeller Thrust vs Speed → Closed-Loop Feedback Control → Demonstration: Tuning the PID Controller → Proportional → Derivative → PID → PID - Anti-windup + Saturation → Quadcopter Hover Control → Quadcopter Position Control using multiple PID loops → Further Resources  
-진도: 10/13
+진도: 11/13
 
 - [x] A06-01 — **Propeller Thrust vs Speed**: 파라미터를 불러와 추력 곡선을 실행한다. 완료 조건: 속도·추력 단위와 수직 운동식의 질량·부호를 확인한다.
 - [x] A06-02 — **Closed-Loop / Exercise·Initialization**: QuadcopterPID_Vertical.slx에 PID를 연결하고 적분기 초기값을 설정한다. 완료 조건: 오차→제어기→prop_speed 경로와 초기값 4000을 기록한다.
@@ -157,7 +157,7 @@
 - [x] A06-08 — **Quadcopter Hover Control / PID Tuner**: PID Tuner로 호버 제어기의 이득을 조정한다. 완료 조건: 실제 적용한 이득과 조정 전후 결과를 제출한다. 제품 미설치 시 보류하며 완료로 처리하지 않는다.
 - [x] A06-09 — **Position Control / Try baseline**: XY_Control.slx를 실행하고 제어 경로를 추적한다. 완료 조건: 위치 제어·자세 제어·프로펠러 명령의 연결을 기록한다.
 - [x] A06-10 — **Position Control / altitude**: 목표 고도를 변경한다. 완료 조건: 목표·실제 고도와 애니메이션 결과를 비교한다.
-- [ ] A06-11 — **Position Control / X and Y**: X·Y 목표를 변경한다. 완료 조건: 목표·실제 위치와 roll·pitch의 관계를 기록한다.
+- [x] A06-11 — **Position Control / X and Y**: X·Y 목표를 변경한다. 완료 조건: 목표·실제 위치와 roll·pitch의 관계를 기록한다.
 - [ ] A06-12 — **Position Control / yaw**: yaw 목표를 변경한다. 완료 조건: 목표·실제 yaw와 회전 단위를 기록한다.
 - [ ] A06-13 — **Position Control / Reflect**: Propeller Speed 하위 시스템을 조사한다. 완료 조건: mixer·부호 있는 제곱근의 의미와 물리적 제한을 실제 블록값을 근거로 설명한다.
 
@@ -417,6 +417,7 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 - A06-08 완료 근거: PID Tuner 화면(응답 시간 0.6325 s, 과도 동작 0.600, 계단 응답 예측: 오버슈트 약 14%, 약 6~7초 정착)과 적용된 블록 이득 화면 제출: P=116.477229370663, I=17.2434436618686, D=193.197431999796, N=17.2469682941307. 조정 전 P=200, I=50, D=150, N=10(오버슈트 약 64%, 약 13초 정착). 조정 후 실제 5 m 실행: 약 1.8초에 약 5.25 m(오버슈트 약 5%), 약 5.7초에 약 3.2 m까지 하강, 약 21초에 5 m 근처. Tuner 예측(약 6~7초 정착)보다 실제가 느림: 선형 근사·출력 제한·시작 명령 포화·적분기 되돌림(P/I≈6.8 s) 영향으로 설명(튜터 추정). 사용자 서술 설명 없음.
 - A06-09 완료 근거: XY_Control 모델 화면(Movement Commands Altitude 10·X·Y·Yaw 0 → Position Control의 Altitude Control·XY Control → Attitude Control → Propeller Speed → Force and Torque → 6DOF → Visualization·Scopes, measured state 피드백)과 실행 후 애니메이션(약 8 m까지 수직 상승 후 East·North 쪽으로 곡선 이동, 위 약 10 m) 제출. 원문 파일 확인: X·Y Step이 t=5 s에 각각 4, 8로 점프, 정지 시간 20 s, 고정 스텝 0.002; XY Control의 PID 두 개는 PD 형태로 저장값 P=1, D=2, N=100, 출력 제한 ±0.1 rad(저장 파라미터 기준, 실제 적용값은 미확인); Altitude Control·Attitude Control의 PID 이득과 프로펠러 속도 제한 ±300의 단위는 미확인(A06-13에서 확인). 사용자 서술 설명은 없음.
 - A06-10 완료 근거: 모델 화면(Altitude 20), 애니메이션(Up 약 20까지 수직 상승 후 East·North 이동), Scopes 4개 화면 제출. <Xe>:3(NED 아래 양)이 0→약 −21(오버슈트 약 5%)→−20, 정착 약 3초. <Ve>:3은 시작 약 −70 m/s(위 방향)에서 약 1초 내 0 — 교재 상수가 비현실적임(원문 지적). t=5 s에 X=4(<Xe>:1), Y=8(<Xe>:2)로 이동, 약 11~12초 정착. <rpy>(roll, pitch, yaw 순): roll(노랑) +0.11 rad(약 5~7.7 s), pitch(파랑) −0.105 rad(약 5~6.8 s)로 ±0.1 rad 제한 근처 포화 후 반대 방향(제동)으로 약 ∓0.11 → 감쇠 진동(약 15 s). Y=8이 더 길어 roll 포화가 더 오래 지속. yaw는 거의 0(±0.01). <wb>는 시작 5 s 이후 최대 약 ±0.6 rad/s. 사용자 서술 설명 없음.
+- A06-11 완료 근거: Altitude 5, X Step 8(North), Y Step 4(East)로 변경해 실행한 애니메이션과 Scopes 제출. <Xe>:1(North) 8, <Xe>:2(East) 4, <Xe>:3 −5(오버슈트 약 6%, 약 −5.3), 약 12초 정착. <Ve>:3 시작 약 −18 m/s(고도 20에서는 약 −70: 오차에 비례, 3.5~3.6 m/s당 1 m). <rpy>에서 pitch(파랑)가 −0.105 rad로 약 5~7.6 s, roll(노랑)이 +0.11 rad로 약 5~6.4 s 포화 후 반대 방향 제동·감쇠 진동 — 이전(X=4·Y=8)과 포화 길이가 서로 바뀜(먼 목표 방향의 각도가 더 오래 포화). 애니메이션의 3차원 높이 눈금은 투영 때문에 읽기 어려우니 Scope 값 기준. 사용자 서술 설명 없음(목표값만 보고).
 - 튜터 정정(5단원): Scope 해석 중 ‘θ가 −90°를 넘어 뒤집힘’은 틀린 설명이었다. 큰 Scope(V_e, X_e, φθψ, q 혼합 축)의 하늘색 선(약 −1.8)은 범례 미확인으로 정체 불명이다.
 - 보충 후보: 시간 간격, 속도·가속도, 수치 적분, 좌표계·회전행렬, 힘·토크, 관성, 피드백, 제어기 각 항. 이해 상태를 추정해 완료 처리하지 않는다.
 
@@ -573,6 +574,8 @@ R2026a PID Tuner 공식 문서: https://www.mathworks.com/help/releases/R2026a/c
 | 2026-10-22 | A06-09: XY_Control 실행·모델 구성 확인(위치→자세→프로펠러 직렬 구조). Step 시각 t=5 s, 목표 X 4·Y 8, 정지 20 s 설명. A06-10 안내 | A06-09 | 교재 49/79=62.0%, 핵심 49/53=92.5%, 제작 0/20=0% | A06-10 |
 
 | 2026-10-22 | A06-10: 고도 20으로 실행, Scopes(속도·위치·자세각·회전율) 해석. 위치→기울기 포화(±0.1 rad)→제동 구조 확인. A06-11 안내 | A06-10 | 교재 50/79=63.3%, 핵심 50/53=94.3%, 제작 0/20=0% | A06-11 |
+
+| 2026-10-22 | A06-11: 사용자가 튜터 제안(X=10, Y=0)과 다른 값(고도 5, X=8, Y=4)으로 실행. X→pitch, Y→roll 관계와 포화 길이 비교 설명. A06-12 안내 | A06-11 | 교재 51/79=64.6%, 핵심 51/53=96.2%, 제작 0/20=0% | A06-12 |
 
 ## 12. 단원 총정리
 
