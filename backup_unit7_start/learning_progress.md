@@ -24,7 +24,7 @@
 | Simulink | 26.1 (R2026a): 첨부 ver 화면 확인 |
 | 라이선스 | 대학교 라이선스: 사용자 제공 정보 |
 | 그 외 제품 | 6절 설치 목록 확인. 실제 예제의 라이선스 사용 가능 여부·실행은 미확인 |
-| 운영체제 | 이전 기록 macOS 26.5.2(2026-10-13 화면). 2026-10-26 화면의 경로가 C:\Users\DAL_DAS2\Documents\MATLAB\my_drone(Windows)이라 다른 PC일 수 있음. 새 대화 시작 시 현재 PC의 `version`·`ver`·교재 위치 확인 필요 |
+| 운영체제·PC | PC A(집): macOS 26.5.2, MATLAB R2026a Update 5, 교재 /Users/min/Documents/MATLAB/Quadcopter-Modeling-Simulation-release. PC B(회사, 2026-10-26 확인): Windows, MATLAB R2026b 26.2.0.3386108, 교재 C:\Users\DAL_DAS2\Documents\MATLAB\Quadcopter-Modeling-Simulation. 사용자는 두 PC를 오가며 사용. 새 대화 시작 시 현재 PC의 `version`·`ver` 확인 필요 |
 | 교재 경로 | /Users/min/Documents/MATLAB/Quadcopter-Modeling-Simulation-release (UAV.prj 프로젝트로 열림) |
 | MATLAB 숙련도 | 기초 수준 |
 | 수학·제어 | 배운 경험 있음, 필요 개념은 기초부터 보충 |
