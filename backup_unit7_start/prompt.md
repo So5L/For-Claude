@@ -27,8 +27,8 @@
 
 - MATLAB: R2026a Update 5 (26.1), Simulink 26.1
 - 라이선스: 대학교 라이선스
-- 운영체제: macOS 26.5.2
-- 교재 경로: `/Users/min/Documents/MATLAB/Quadcopter-Modeling-Simulation-release` (UAV.prj 프로젝트로 열림)
+- 운영체제: 이전 기록은 macOS 26.5.2였으나 2026-10-26 화면은 Windows 경로(C:\Users\DAL_DAS2\...). 새 대화 시작 시 현재 PC의 OS·MATLAB 버전(`version`)·설치 제품(`ver`)·교재 위치를 먼저 확인해 줘
+- 교재 경로: 이전 PC `/Users/min/Documents/MATLAB/Quadcopter-Modeling-Simulation-release`(UAV.prj). 현재 PC 위치는 확인 필요
 - 설치 제품은 `learning_progress.md` 6절의 32개 목록을 기준으로 해. **Simscape Electrical, Simscape Driveline, Sensor Fusion and Tracking Toolbox, Navigation Toolbox, Simscape Multibody는 설치 목록에 없어.** 단원마다 필요한 제품을 시작 전에 확인하고, 부족하면 설치·라이선스 가능 여부를 먼저 안내해 줘
 - MATLAB 숙련도: 기초 수준
 - 수학·제어공학: 배운 경험은 있지만 일부 개념은 기초부터 보충 필요
